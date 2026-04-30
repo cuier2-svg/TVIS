@@ -2,7 +2,7 @@
 
 ## Build
 
-This project depends on `boost` and `libOTe`. The author used `gcc 11.4.1`.
+This project depends on `boost` and `libOTe`. The author used `gcc 11.4.1` and libOTe version `17c85f7252058f008877ad8706108d026064a6e3`.
 
 ```shell
 cd libOTe
@@ -21,4 +21,4 @@ To run it:
 
 ## Contact
 
-Contact `lzjluzijie@gmail.com` if you have any question.
+Create a GitHub issue or contact `lzjluzijie@gmail.com` if you have any question.
