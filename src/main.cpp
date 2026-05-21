@@ -75,7 +75,7 @@ void testNoisy() {
 
 int main(int argc, char **argv) {
 //  CM20::main(argc, argv);
-  prec::main(argc, argv);
-//  vole::main(argc, argv);
+  // prec::main(argc, argv);
+ vole::main(argc, argv);
 //  testNoisy();
 }

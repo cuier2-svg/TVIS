@@ -23,7 +23,7 @@ namespace vole {
       senderSize = 1 << senderSize;
     }
 
-    cmd.setDefault("rs", 10);
+    cmd.setDefault("rs", 8);
     receiverSize = cmd.get<u64>("rs");
     if (receiverSize <= 32) {
       receiverSize = 1 << receiverSize;

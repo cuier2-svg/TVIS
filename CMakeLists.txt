@@ -32,7 +32,7 @@ target_include_directories(psi PUBLIC cuckoofilter)
 set(Boost_USE_DEBUG_RUNTIME OFF)
 
 find_package(libOTe REQUIRED
-        PATHS ../../dev/libOTe
+
         NO_DEFAULT_PATH
         NO_CMAKE_ENVIRONMENT_PATH
         NO_CMAKE_PATH
