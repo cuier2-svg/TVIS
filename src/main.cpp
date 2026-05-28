@@ -1,8 +1,12 @@
 #include "CM20/CM20.hpp"
+#ifdef PSI_ENABLE_BATCHPIR
+#include "batchpir/batchpir.hpp"
+#endif
 #include "prec/prec.hpp"
 #include "vole/vole.hpp"
 
 #include "cuckoofilter.h"
+#include <cryptoTools/Common/CLP.h>
 
 using namespace std;
 
@@ -74,8 +78,31 @@ void testNoisy() {
 }
 
 int main(int argc, char **argv) {
-//  CM20::main(argc, argv);
-  // prec::main(argc, argv);
- vole::main(argc, argv);
-//  testNoisy();
+  oc::CLP cmd;
+  cmd.parse(argc, argv);
+  cmd.setDefault("protocol", "vole");
+  cmd.setDefault("p", cmd.get<string>("protocol"));
+  auto protocol = cmd.get<string>("p");
+
+  if (protocol == "CM20" || protocol == "cm20") {
+    return CM20::main(argc, argv);
+  }
+  if (protocol == "prec") {
+    return prec::main(argc, argv);
+  }
+  if (protocol == "batchpir") {
+#ifdef PSI_ENABLE_BATCHPIR
+    return batchpir::main(argc, argv);
+#else
+    cerr << "BatchPIR support was not built because Microsoft SEAL was not found.\n";
+    return 1;
+#endif
+  }
+  if (protocol == "vole") {
+    return vole::main(argc, argv);
+  }
+
+  cerr << "Unknown protocol: " << protocol
+       << " (expected vole, cm20, prec, or batchpir)\n";
+  return 1;
 }

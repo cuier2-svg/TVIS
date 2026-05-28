@@ -22,6 +22,7 @@
 #include <assert.h>
 #include <sys/param.h>
 #include <algorithm>
+#include <array>
 
 #include "debug.h"
 #include "hashutil.h"
@@ -105,6 +106,12 @@ class CuckooFilter {
   double BitsPerItem() const { return 8.0 * table_->SizeInBytes() / Size(); }
 
  public:
+  typedef struct {
+    size_t i1;
+    size_t i2;
+    uint32_t tag;
+  } Query;
+
   explicit CuckooFilter(const size_t max_num_keys)
       : num_items_(0), victim_(), hasher_() {
     size_t assoc = 3;
@@ -144,6 +151,10 @@ class CuckooFilter {
   void deserialize(const std::vector<uint8_t> &data);
   std::vector<uint8_t> serialize(size_t part_size, size_t start) const;
   void deserialize(const std::vector<uint8_t> &data, size_t start);
+  Query GetQuery(const ItemType &item) const;
+  std::array<uint32_t, 3> ReadBucketTags(size_t index) const;
+  size_t NumBuckets() const { return table_->NumBuckets(); }
+  static constexpr size_t TagsPerBucket() { return 3; }
 
   // number of current inserted items;
   size_t Size() const { return num_items_; }
@@ -154,6 +165,31 @@ class CuckooFilter {
   // size of the filter in tags.
   size_t SizeInTags() const { return table_->SizeInTags(); }
 };
+
+template <typename ItemType, size_t bits_per_item,
+          template <size_t> class TableType, typename HashFamily>
+typename CuckooFilter<ItemType, bits_per_item, TableType, HashFamily>::Query
+CuckooFilter<ItemType, bits_per_item, TableType, HashFamily>::GetQuery(
+    const ItemType &item) const {
+  Query query;
+  GenerateIndexTagHash(item, &query.i1, &query.tag);
+  query.i2 = AltIndex(query.i1, query.tag);
+  return query;
+}
+
+template <typename ItemType, size_t bits_per_item,
+          template <size_t> class TableType, typename HashFamily>
+std::array<uint32_t, 3>
+CuckooFilter<ItemType, bits_per_item, TableType, HashFamily>::ReadBucketTags(
+    size_t index) const {
+  static_assert(bits_per_item == 32,
+                "ReadBucketTags only implemented for 32 bit fingerprints");
+  std::array<uint32_t, 3> tags{};
+  for (size_t i = 0; i < tags.size(); ++i) {
+    tags[i] = table_->ReadTag(index, i);
+  }
+  return tags;
+}
 
 template <typename ItemType, size_t bits_per_item,
           template <size_t> class TableType, typename HashFamily>

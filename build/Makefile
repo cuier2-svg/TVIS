@@ -129,6 +129,19 @@ psi/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/psi.dir/build.make CMakeFiles/psi.dir/build
 .PHONY : psi/fast
 
+#=============================================================================
+# Target rules for targets named vectorized_batchpir
+
+# Build rule for target.
+vectorized_batchpir: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 vectorized_batchpir
+.PHONY : vectorized_batchpir
+
+# fast build rule for target.
+vectorized_batchpir/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/vectorized_batchpir.dir/build.make CMakeFiles/vectorized_batchpir.dir/build
+.PHONY : vectorized_batchpir/fast
+
 src/CM20/CM20.o: src/CM20/CM20.cpp.o
 .PHONY : src/CM20/CM20.o
 
@@ -200,6 +213,30 @@ src/CM20/sender.s: src/CM20/sender.cpp.s
 src/CM20/sender.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/psi.dir/build.make CMakeFiles/psi.dir/src/CM20/sender.cpp.s
 .PHONY : src/CM20/sender.cpp.s
+
+src/batchpir/batchpir.o: src/batchpir/batchpir.cpp.o
+.PHONY : src/batchpir/batchpir.o
+
+# target to build an object file
+src/batchpir/batchpir.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/psi.dir/build.make CMakeFiles/psi.dir/src/batchpir/batchpir.cpp.o
+.PHONY : src/batchpir/batchpir.cpp.o
+
+src/batchpir/batchpir.i: src/batchpir/batchpir.cpp.i
+.PHONY : src/batchpir/batchpir.i
+
+# target to preprocess a source file
+src/batchpir/batchpir.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/psi.dir/build.make CMakeFiles/psi.dir/src/batchpir/batchpir.cpp.i
+.PHONY : src/batchpir/batchpir.cpp.i
+
+src/batchpir/batchpir.s: src/batchpir/batchpir.cpp.s
+.PHONY : src/batchpir/batchpir.s
+
+# target to generate assembly for a file
+src/batchpir/batchpir.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/psi.dir/build.make CMakeFiles/psi.dir/src/batchpir/batchpir.cpp.s
+.PHONY : src/batchpir/batchpir.cpp.s
 
 src/main.o: src/main.cpp.o
 .PHONY : src/main.o
@@ -297,6 +334,30 @@ src/prec/sender.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/psi.dir/build.make CMakeFiles/psi.dir/src/prec/sender.cpp.s
 .PHONY : src/prec/sender.cpp.s
 
+src/vole/cf_batchpir.o: src/vole/cf_batchpir.cpp.o
+.PHONY : src/vole/cf_batchpir.o
+
+# target to build an object file
+src/vole/cf_batchpir.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/psi.dir/build.make CMakeFiles/psi.dir/src/vole/cf_batchpir.cpp.o
+.PHONY : src/vole/cf_batchpir.cpp.o
+
+src/vole/cf_batchpir.i: src/vole/cf_batchpir.cpp.i
+.PHONY : src/vole/cf_batchpir.i
+
+# target to preprocess a source file
+src/vole/cf_batchpir.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/psi.dir/build.make CMakeFiles/psi.dir/src/vole/cf_batchpir.cpp.i
+.PHONY : src/vole/cf_batchpir.cpp.i
+
+src/vole/cf_batchpir.s: src/vole/cf_batchpir.cpp.s
+.PHONY : src/vole/cf_batchpir.s
+
+# target to generate assembly for a file
+src/vole/cf_batchpir.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/psi.dir/build.make CMakeFiles/psi.dir/src/vole/cf_batchpir.cpp.s
+.PHONY : src/vole/cf_batchpir.cpp.s
+
 src/vole/receiver.o: src/vole/receiver.cpp.o
 .PHONY : src/vole/receiver.o
 
@@ -369,6 +430,150 @@ src/vole/vole.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/psi.dir/build.make CMakeFiles/psi.dir/src/vole/vole.cpp.s
 .PHONY : src/vole/vole.cpp.s
 
+third_party/vectorized_batchpir/src/batchpirclient.o: third_party/vectorized_batchpir/src/batchpirclient.cpp.o
+.PHONY : third_party/vectorized_batchpir/src/batchpirclient.o
+
+# target to build an object file
+third_party/vectorized_batchpir/src/batchpirclient.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/vectorized_batchpir.dir/build.make CMakeFiles/vectorized_batchpir.dir/third_party/vectorized_batchpir/src/batchpirclient.cpp.o
+.PHONY : third_party/vectorized_batchpir/src/batchpirclient.cpp.o
+
+third_party/vectorized_batchpir/src/batchpirclient.i: third_party/vectorized_batchpir/src/batchpirclient.cpp.i
+.PHONY : third_party/vectorized_batchpir/src/batchpirclient.i
+
+# target to preprocess a source file
+third_party/vectorized_batchpir/src/batchpirclient.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/vectorized_batchpir.dir/build.make CMakeFiles/vectorized_batchpir.dir/third_party/vectorized_batchpir/src/batchpirclient.cpp.i
+.PHONY : third_party/vectorized_batchpir/src/batchpirclient.cpp.i
+
+third_party/vectorized_batchpir/src/batchpirclient.s: third_party/vectorized_batchpir/src/batchpirclient.cpp.s
+.PHONY : third_party/vectorized_batchpir/src/batchpirclient.s
+
+# target to generate assembly for a file
+third_party/vectorized_batchpir/src/batchpirclient.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/vectorized_batchpir.dir/build.make CMakeFiles/vectorized_batchpir.dir/third_party/vectorized_batchpir/src/batchpirclient.cpp.s
+.PHONY : third_party/vectorized_batchpir/src/batchpirclient.cpp.s
+
+third_party/vectorized_batchpir/src/batchpirparams.o: third_party/vectorized_batchpir/src/batchpirparams.cpp.o
+.PHONY : third_party/vectorized_batchpir/src/batchpirparams.o
+
+# target to build an object file
+third_party/vectorized_batchpir/src/batchpirparams.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/vectorized_batchpir.dir/build.make CMakeFiles/vectorized_batchpir.dir/third_party/vectorized_batchpir/src/batchpirparams.cpp.o
+.PHONY : third_party/vectorized_batchpir/src/batchpirparams.cpp.o
+
+third_party/vectorized_batchpir/src/batchpirparams.i: third_party/vectorized_batchpir/src/batchpirparams.cpp.i
+.PHONY : third_party/vectorized_batchpir/src/batchpirparams.i
+
+# target to preprocess a source file
+third_party/vectorized_batchpir/src/batchpirparams.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/vectorized_batchpir.dir/build.make CMakeFiles/vectorized_batchpir.dir/third_party/vectorized_batchpir/src/batchpirparams.cpp.i
+.PHONY : third_party/vectorized_batchpir/src/batchpirparams.cpp.i
+
+third_party/vectorized_batchpir/src/batchpirparams.s: third_party/vectorized_batchpir/src/batchpirparams.cpp.s
+.PHONY : third_party/vectorized_batchpir/src/batchpirparams.s
+
+# target to generate assembly for a file
+third_party/vectorized_batchpir/src/batchpirparams.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/vectorized_batchpir.dir/build.make CMakeFiles/vectorized_batchpir.dir/third_party/vectorized_batchpir/src/batchpirparams.cpp.s
+.PHONY : third_party/vectorized_batchpir/src/batchpirparams.cpp.s
+
+third_party/vectorized_batchpir/src/batchpirserver.o: third_party/vectorized_batchpir/src/batchpirserver.cpp.o
+.PHONY : third_party/vectorized_batchpir/src/batchpirserver.o
+
+# target to build an object file
+third_party/vectorized_batchpir/src/batchpirserver.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/vectorized_batchpir.dir/build.make CMakeFiles/vectorized_batchpir.dir/third_party/vectorized_batchpir/src/batchpirserver.cpp.o
+.PHONY : third_party/vectorized_batchpir/src/batchpirserver.cpp.o
+
+third_party/vectorized_batchpir/src/batchpirserver.i: third_party/vectorized_batchpir/src/batchpirserver.cpp.i
+.PHONY : third_party/vectorized_batchpir/src/batchpirserver.i
+
+# target to preprocess a source file
+third_party/vectorized_batchpir/src/batchpirserver.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/vectorized_batchpir.dir/build.make CMakeFiles/vectorized_batchpir.dir/third_party/vectorized_batchpir/src/batchpirserver.cpp.i
+.PHONY : third_party/vectorized_batchpir/src/batchpirserver.cpp.i
+
+third_party/vectorized_batchpir/src/batchpirserver.s: third_party/vectorized_batchpir/src/batchpirserver.cpp.s
+.PHONY : third_party/vectorized_batchpir/src/batchpirserver.s
+
+# target to generate assembly for a file
+third_party/vectorized_batchpir/src/batchpirserver.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/vectorized_batchpir.dir/build.make CMakeFiles/vectorized_batchpir.dir/third_party/vectorized_batchpir/src/batchpirserver.cpp.s
+.PHONY : third_party/vectorized_batchpir/src/batchpirserver.cpp.s
+
+third_party/vectorized_batchpir/src/client.o: third_party/vectorized_batchpir/src/client.cpp.o
+.PHONY : third_party/vectorized_batchpir/src/client.o
+
+# target to build an object file
+third_party/vectorized_batchpir/src/client.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/vectorized_batchpir.dir/build.make CMakeFiles/vectorized_batchpir.dir/third_party/vectorized_batchpir/src/client.cpp.o
+.PHONY : third_party/vectorized_batchpir/src/client.cpp.o
+
+third_party/vectorized_batchpir/src/client.i: third_party/vectorized_batchpir/src/client.cpp.i
+.PHONY : third_party/vectorized_batchpir/src/client.i
+
+# target to preprocess a source file
+third_party/vectorized_batchpir/src/client.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/vectorized_batchpir.dir/build.make CMakeFiles/vectorized_batchpir.dir/third_party/vectorized_batchpir/src/client.cpp.i
+.PHONY : third_party/vectorized_batchpir/src/client.cpp.i
+
+third_party/vectorized_batchpir/src/client.s: third_party/vectorized_batchpir/src/client.cpp.s
+.PHONY : third_party/vectorized_batchpir/src/client.s
+
+# target to generate assembly for a file
+third_party/vectorized_batchpir/src/client.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/vectorized_batchpir.dir/build.make CMakeFiles/vectorized_batchpir.dir/third_party/vectorized_batchpir/src/client.cpp.s
+.PHONY : third_party/vectorized_batchpir/src/client.cpp.s
+
+third_party/vectorized_batchpir/src/pirparams.o: third_party/vectorized_batchpir/src/pirparams.cpp.o
+.PHONY : third_party/vectorized_batchpir/src/pirparams.o
+
+# target to build an object file
+third_party/vectorized_batchpir/src/pirparams.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/vectorized_batchpir.dir/build.make CMakeFiles/vectorized_batchpir.dir/third_party/vectorized_batchpir/src/pirparams.cpp.o
+.PHONY : third_party/vectorized_batchpir/src/pirparams.cpp.o
+
+third_party/vectorized_batchpir/src/pirparams.i: third_party/vectorized_batchpir/src/pirparams.cpp.i
+.PHONY : third_party/vectorized_batchpir/src/pirparams.i
+
+# target to preprocess a source file
+third_party/vectorized_batchpir/src/pirparams.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/vectorized_batchpir.dir/build.make CMakeFiles/vectorized_batchpir.dir/third_party/vectorized_batchpir/src/pirparams.cpp.i
+.PHONY : third_party/vectorized_batchpir/src/pirparams.cpp.i
+
+third_party/vectorized_batchpir/src/pirparams.s: third_party/vectorized_batchpir/src/pirparams.cpp.s
+.PHONY : third_party/vectorized_batchpir/src/pirparams.s
+
+# target to generate assembly for a file
+third_party/vectorized_batchpir/src/pirparams.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/vectorized_batchpir.dir/build.make CMakeFiles/vectorized_batchpir.dir/third_party/vectorized_batchpir/src/pirparams.cpp.s
+.PHONY : third_party/vectorized_batchpir/src/pirparams.cpp.s
+
+third_party/vectorized_batchpir/src/server.o: third_party/vectorized_batchpir/src/server.cpp.o
+.PHONY : third_party/vectorized_batchpir/src/server.o
+
+# target to build an object file
+third_party/vectorized_batchpir/src/server.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/vectorized_batchpir.dir/build.make CMakeFiles/vectorized_batchpir.dir/third_party/vectorized_batchpir/src/server.cpp.o
+.PHONY : third_party/vectorized_batchpir/src/server.cpp.o
+
+third_party/vectorized_batchpir/src/server.i: third_party/vectorized_batchpir/src/server.cpp.i
+.PHONY : third_party/vectorized_batchpir/src/server.i
+
+# target to preprocess a source file
+third_party/vectorized_batchpir/src/server.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/vectorized_batchpir.dir/build.make CMakeFiles/vectorized_batchpir.dir/third_party/vectorized_batchpir/src/server.cpp.i
+.PHONY : third_party/vectorized_batchpir/src/server.cpp.i
+
+third_party/vectorized_batchpir/src/server.s: third_party/vectorized_batchpir/src/server.cpp.s
+.PHONY : third_party/vectorized_batchpir/src/server.s
+
+# target to generate assembly for a file
+third_party/vectorized_batchpir/src/server.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/vectorized_batchpir.dir/build.make CMakeFiles/vectorized_batchpir.dir/third_party/vectorized_batchpir/src/server.cpp.s
+.PHONY : third_party/vectorized_batchpir/src/server.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -378,6 +583,7 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... psi"
+	@echo "... vectorized_batchpir"
 	@echo "... src/CM20/CM20.o"
 	@echo "... src/CM20/CM20.i"
 	@echo "... src/CM20/CM20.s"
@@ -387,6 +593,9 @@ help:
 	@echo "... src/CM20/sender.o"
 	@echo "... src/CM20/sender.i"
 	@echo "... src/CM20/sender.s"
+	@echo "... src/batchpir/batchpir.o"
+	@echo "... src/batchpir/batchpir.i"
+	@echo "... src/batchpir/batchpir.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
@@ -399,6 +608,9 @@ help:
 	@echo "... src/prec/sender.o"
 	@echo "... src/prec/sender.i"
 	@echo "... src/prec/sender.s"
+	@echo "... src/vole/cf_batchpir.o"
+	@echo "... src/vole/cf_batchpir.i"
+	@echo "... src/vole/cf_batchpir.s"
 	@echo "... src/vole/receiver.o"
 	@echo "... src/vole/receiver.i"
 	@echo "... src/vole/receiver.s"
@@ -408,6 +620,24 @@ help:
 	@echo "... src/vole/vole.o"
 	@echo "... src/vole/vole.i"
 	@echo "... src/vole/vole.s"
+	@echo "... third_party/vectorized_batchpir/src/batchpirclient.o"
+	@echo "... third_party/vectorized_batchpir/src/batchpirclient.i"
+	@echo "... third_party/vectorized_batchpir/src/batchpirclient.s"
+	@echo "... third_party/vectorized_batchpir/src/batchpirparams.o"
+	@echo "... third_party/vectorized_batchpir/src/batchpirparams.i"
+	@echo "... third_party/vectorized_batchpir/src/batchpirparams.s"
+	@echo "... third_party/vectorized_batchpir/src/batchpirserver.o"
+	@echo "... third_party/vectorized_batchpir/src/batchpirserver.i"
+	@echo "... third_party/vectorized_batchpir/src/batchpirserver.s"
+	@echo "... third_party/vectorized_batchpir/src/client.o"
+	@echo "... third_party/vectorized_batchpir/src/client.i"
+	@echo "... third_party/vectorized_batchpir/src/client.s"
+	@echo "... third_party/vectorized_batchpir/src/pirparams.o"
+	@echo "... third_party/vectorized_batchpir/src/pirparams.i"
+	@echo "... third_party/vectorized_batchpir/src/pirparams.s"
+	@echo "... third_party/vectorized_batchpir/src/server.o"
+	@echo "... third_party/vectorized_batchpir/src/server.i"
+	@echo "... third_party/vectorized_batchpir/src/server.s"
 .PHONY : help
 
 

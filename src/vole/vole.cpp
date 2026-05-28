@@ -17,7 +17,7 @@ namespace vole {
     u64 receiverSize;
     string ip;
 
-    cmd.setDefault("ss", 20);
+    cmd.setDefault("ss", 18);
     senderSize = cmd.get<u64>("ss");
     if (senderSize <= 32) {
       senderSize = 1 << senderSize;
@@ -32,10 +32,19 @@ namespace vole {
     cmd.setDefault("ip", "localhost");
     ip = cmd.get<string>("ip");
 
+    cmd.setDefault("cf", "full");
+    auto cfMode = cmd.get<string>("cf");
+    bool indexedCf = cfMode == "indexed" || cfMode == "batchpir";
+    bool batchPirCf = cfMode == "batchpir";
+    cmd.setDefault("bp_cf_batch", 64);
+    u64 batchPirChunkSize = cmd.get<u64>("bp_cf_batch");
 
     VOLE psi(commonSeed,
              senderSize,
-             receiverSize
+             receiverSize,
+             indexedCf,
+             batchPirCf,
+             batchPirChunkSize
              );
 
     bool noneSet = !cmd.isSet("r");
@@ -54,7 +63,9 @@ namespace vole {
           << "Parameters:\n"
           << " -ss     log(#elements) on sender side.\n"
           << " -rs     log(#elements) on receiver side.\n"
-          << " -ip     ip address (and port).\n";
+          << " -ip     ip address (and port).\n"
+          << " -cf     full, indexed, or batchpir CF transfer.\n"
+          << " -bp_cf_batch   max CF buckets per BatchPIR query chunk.\n";
     } else {
       if (cmd.get<u64>("r") == 0) {
         psi.runSender();

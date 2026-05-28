@@ -1,3 +1,5 @@
+#pragma once
+
 #include <cryptoTools/Network/IOService.h>
 #include <cryptoTools/Network/Endpoint.h>
 #include <cryptoTools/Network/Channel.h>
@@ -16,6 +18,7 @@
 #include "volePSI/Paxos.h"
 
 #include <openssl/sha.h>
+#include <string>
 
 using volePSI::Paxos;
 using volePSI::Baxos;
@@ -35,14 +38,23 @@ namespace vole {
     const block commonSeed;
     const u64 senderSize;
     const u64 receiverSize;
+    const bool indexedCf;
+    const bool batchPirCf;
+    const u64 batchPirChunkSize;
 
     VOLE(block commonSeed,
          u64 senderSize,
-         u64 receiverSize
+         u64 receiverSize,
+         bool indexedCf = false,
+         bool batchPirCf = false,
+         u64 batchPirChunkSize = 64
     )
         : commonSeed(commonSeed),
           senderSize(senderSize),
-          receiverSize(receiverSize) {}
+          receiverSize(receiverSize),
+          indexedCf(indexedCf),
+          batchPirCf(batchPirCf),
+          batchPirChunkSize(batchPirChunkSize) {}
 
     void runSender(PRNG prng, Socket ch, const std::vector<block> &senderSet);
     void runReceiver(PRNG prng, Socket ch, const std::vector<block> &receiverSet);

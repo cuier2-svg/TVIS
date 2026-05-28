@@ -74,8 +74,8 @@ CMAKE_ADDR2LINE:FILEPATH=CMAKE_ADDR2LINE-NOTFOUND
 //Path to a program.
 CMAKE_AR:FILEPATH=/usr/bin/ar
 
-//Choose the type of build.
-CMAKE_BUILD_TYPE:STRING=Release
+//No help, variable specified on the command line.
+CMAKE_BUILD_TYPE:STRING=Debug
 
 //Enable/Disable color output during build.
 CMAKE_COLOR_MAKEFILE:BOOL=ON
@@ -134,8 +134,8 @@ CMAKE_EXE_LINKER_FLAGS_RELEASE:STRING=
 //Flags used by the linker during RELWITHDEBINFO builds.
 CMAKE_EXE_LINKER_FLAGS_RELWITHDEBINFO:STRING=
 
-//Enable/Disable output of compile commands during generation.
-CMAKE_EXPORT_COMPILE_COMMANDS:BOOL=
+//No help, variable specified on the command line.
+CMAKE_EXPORT_COMPILE_COMMANDS:BOOL=TRUE
 
 //Value Computed by CMake.
 CMAKE_FIND_PACKAGE_REDIRECTS_DIR:STATIC=/Users/cuiyang/upsi-main-2/build/CMakeFiles/pkgRedirects
@@ -275,8 +275,14 @@ CMAKE_TAPI:FILEPATH=/Library/Developer/CommandLineTools/usr/bin/tapi
 // Studio IDE projects all commands are done without /nologo.
 CMAKE_VERBOSE_MAKEFILE:BOOL=FALSE
 
+//Build the vectorized BatchPIR integration when SEAL is available
+ENABLE_BATCHPIR:BOOL=ON
+
 //Path to a file.
 LIBDIVIDE_INCLUDE_DIRS:PATH=/usr/local/include
+
+//The directory containing a CMake configuration file for Microsoft.GSL.
+Microsoft.GSL_DIR:PATH=/opt/homebrew/share/cmake/Microsoft.GSL
 
 //Path to a library.
 OPENSSL_CRYPTO_LIBRARY:FILEPATH=/opt/homebrew/lib/libcrypto.dylib
@@ -302,6 +308,9 @@ PSI_IS_TOP_LEVEL:STATIC=ON
 //Value Computed by CMake
 PSI_SOURCE_DIR:STATIC=/Users/cuiyang/upsi-main-2
 
+//The directory containing a CMake configuration file for SEAL.
+SEAL_DIR:PATH=/opt/homebrew/lib/cmake/SEAL-4.3
+
 //Path to a file.
 SODIUM_INCLUDE_DIRS:PATH=/usr/local/include
 
@@ -310,6 +319,15 @@ SODIUM_LIBRARIES:FILEPATH=/usr/local/lib/libsodium.a
 
 //SODIUM_MONTGOMERY...
 SODIUM_MONTGOMERY:BOOL=ON
+
+//Path to a file.
+ZLIB_INCLUDE_DIR:PATH=/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include
+
+//Path to a library.
+ZLIB_LIBRARY_DEBUG:FILEPATH=ZLIB_LIBRARY_DEBUG-NOTFOUND
+
+//Path to a library.
+ZLIB_LIBRARY_RELEASE:FILEPATH=/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/lib/libz.tbd
 
 //The directory containing a CMake configuration file for coproto.
 coproto_DIR:PATH=/usr/local/lib/cmake/coproto
@@ -325,6 +343,9 @@ libOTe_DIR:UNINITIALIZED=/usr/local/lib/cmake/libOTe
 
 //The directory containing a CMake configuration file for macoro.
 macoro_DIR:PATH=/usr/local/lib/cmake/macoro
+
+//The directory containing a CMake configuration file for zstd.
+zstd_DIR:PATH=/opt/homebrew/lib/cmake/zstd
 
 
 ########################
@@ -417,8 +438,6 @@ CMAKE_EXE_LINKER_FLAGS_MINSIZEREL-ADVANCED:INTERNAL=1
 CMAKE_EXE_LINKER_FLAGS_RELEASE-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_EXE_LINKER_FLAGS_RELWITHDEBINFO
 CMAKE_EXE_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
-//ADVANCED property for variable: CMAKE_EXPORT_COMPILE_COMMANDS
-CMAKE_EXPORT_COMPILE_COMMANDS-ADVANCED:INTERNAL=1
 //Name of external makefile project generator.
 CMAKE_EXTRA_GENERATOR:INTERNAL=
 //Name of generator.
@@ -516,6 +535,12 @@ OPENSSL_SSL_LIBRARY-ADVANCED:INTERNAL=1
 PKG_CONFIG_ARGN-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: PKG_CONFIG_EXECUTABLE
 PKG_CONFIG_EXECUTABLE-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: ZLIB_INCLUDE_DIR
+ZLIB_INCLUDE_DIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: ZLIB_LIBRARY_DEBUG
+ZLIB_LIBRARY_DEBUG-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: ZLIB_LIBRARY_RELEASE
+ZLIB_LIBRARY_RELEASE-ADVANCED:INTERNAL=1
 //Components requested for this build tree.
 _Boost_COMPONENTS_SEARCHED:INTERNAL=atomic;chrono;regex;system;thread
 //Last used Boost_INCLUDE_DIR value.
