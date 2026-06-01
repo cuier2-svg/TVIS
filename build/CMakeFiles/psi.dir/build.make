@@ -72,66 +72,10 @@ include CMakeFiles/psi.dir/flags.make
 CMakeFiles/psi.dir/codegen:
 .PHONY : CMakeFiles/psi.dir/codegen
 
-CMakeFiles/psi.dir/src/CM20/CM20.cpp.o: CMakeFiles/psi.dir/flags.make
-CMakeFiles/psi.dir/src/CM20/CM20.cpp.o: /Users/cuiyang/upsi-main-2/src/CM20/CM20.cpp
-CMakeFiles/psi.dir/src/CM20/CM20.cpp.o: CMakeFiles/psi.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/cuiyang/upsi-main-2/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/psi.dir/src/CM20/CM20.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/psi.dir/src/CM20/CM20.cpp.o -MF CMakeFiles/psi.dir/src/CM20/CM20.cpp.o.d -o CMakeFiles/psi.dir/src/CM20/CM20.cpp.o -c /Users/cuiyang/upsi-main-2/src/CM20/CM20.cpp
-
-CMakeFiles/psi.dir/src/CM20/CM20.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/psi.dir/src/CM20/CM20.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/cuiyang/upsi-main-2/src/CM20/CM20.cpp > CMakeFiles/psi.dir/src/CM20/CM20.cpp.i
-
-CMakeFiles/psi.dir/src/CM20/CM20.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/psi.dir/src/CM20/CM20.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/cuiyang/upsi-main-2/src/CM20/CM20.cpp -o CMakeFiles/psi.dir/src/CM20/CM20.cpp.s
-
-CMakeFiles/psi.dir/src/CM20/receiver.cpp.o: CMakeFiles/psi.dir/flags.make
-CMakeFiles/psi.dir/src/CM20/receiver.cpp.o: /Users/cuiyang/upsi-main-2/src/CM20/receiver.cpp
-CMakeFiles/psi.dir/src/CM20/receiver.cpp.o: CMakeFiles/psi.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/cuiyang/upsi-main-2/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/psi.dir/src/CM20/receiver.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/psi.dir/src/CM20/receiver.cpp.o -MF CMakeFiles/psi.dir/src/CM20/receiver.cpp.o.d -o CMakeFiles/psi.dir/src/CM20/receiver.cpp.o -c /Users/cuiyang/upsi-main-2/src/CM20/receiver.cpp
-
-CMakeFiles/psi.dir/src/CM20/receiver.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/psi.dir/src/CM20/receiver.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/cuiyang/upsi-main-2/src/CM20/receiver.cpp > CMakeFiles/psi.dir/src/CM20/receiver.cpp.i
-
-CMakeFiles/psi.dir/src/CM20/receiver.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/psi.dir/src/CM20/receiver.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/cuiyang/upsi-main-2/src/CM20/receiver.cpp -o CMakeFiles/psi.dir/src/CM20/receiver.cpp.s
-
-CMakeFiles/psi.dir/src/CM20/sender.cpp.o: CMakeFiles/psi.dir/flags.make
-CMakeFiles/psi.dir/src/CM20/sender.cpp.o: /Users/cuiyang/upsi-main-2/src/CM20/sender.cpp
-CMakeFiles/psi.dir/src/CM20/sender.cpp.o: CMakeFiles/psi.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/cuiyang/upsi-main-2/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/psi.dir/src/CM20/sender.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/psi.dir/src/CM20/sender.cpp.o -MF CMakeFiles/psi.dir/src/CM20/sender.cpp.o.d -o CMakeFiles/psi.dir/src/CM20/sender.cpp.o -c /Users/cuiyang/upsi-main-2/src/CM20/sender.cpp
-
-CMakeFiles/psi.dir/src/CM20/sender.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/psi.dir/src/CM20/sender.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/cuiyang/upsi-main-2/src/CM20/sender.cpp > CMakeFiles/psi.dir/src/CM20/sender.cpp.i
-
-CMakeFiles/psi.dir/src/CM20/sender.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/psi.dir/src/CM20/sender.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/cuiyang/upsi-main-2/src/CM20/sender.cpp -o CMakeFiles/psi.dir/src/CM20/sender.cpp.s
-
-CMakeFiles/psi.dir/src/batchpir/batchpir.cpp.o: CMakeFiles/psi.dir/flags.make
-CMakeFiles/psi.dir/src/batchpir/batchpir.cpp.o: /Users/cuiyang/upsi-main-2/src/batchpir/batchpir.cpp
-CMakeFiles/psi.dir/src/batchpir/batchpir.cpp.o: CMakeFiles/psi.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/cuiyang/upsi-main-2/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/psi.dir/src/batchpir/batchpir.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/psi.dir/src/batchpir/batchpir.cpp.o -MF CMakeFiles/psi.dir/src/batchpir/batchpir.cpp.o.d -o CMakeFiles/psi.dir/src/batchpir/batchpir.cpp.o -c /Users/cuiyang/upsi-main-2/src/batchpir/batchpir.cpp
-
-CMakeFiles/psi.dir/src/batchpir/batchpir.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/psi.dir/src/batchpir/batchpir.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/cuiyang/upsi-main-2/src/batchpir/batchpir.cpp > CMakeFiles/psi.dir/src/batchpir/batchpir.cpp.i
-
-CMakeFiles/psi.dir/src/batchpir/batchpir.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/psi.dir/src/batchpir/batchpir.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/cuiyang/upsi-main-2/src/batchpir/batchpir.cpp -o CMakeFiles/psi.dir/src/batchpir/batchpir.cpp.s
-
 CMakeFiles/psi.dir/src/main.cpp.o: CMakeFiles/psi.dir/flags.make
 CMakeFiles/psi.dir/src/main.cpp.o: /Users/cuiyang/upsi-main-2/src/main.cpp
 CMakeFiles/psi.dir/src/main.cpp.o: CMakeFiles/psi.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/cuiyang/upsi-main-2/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/psi.dir/src/main.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/cuiyang/upsi-main-2/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/psi.dir/src/main.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/psi.dir/src/main.cpp.o -MF CMakeFiles/psi.dir/src/main.cpp.o.d -o CMakeFiles/psi.dir/src/main.cpp.o -c /Users/cuiyang/upsi-main-2/src/main.cpp
 
 CMakeFiles/psi.dir/src/main.cpp.i: cmake_force
@@ -142,66 +86,10 @@ CMakeFiles/psi.dir/src/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/psi.dir/src/main.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/cuiyang/upsi-main-2/src/main.cpp -o CMakeFiles/psi.dir/src/main.cpp.s
 
-CMakeFiles/psi.dir/src/prec/prec.cpp.o: CMakeFiles/psi.dir/flags.make
-CMakeFiles/psi.dir/src/prec/prec.cpp.o: /Users/cuiyang/upsi-main-2/src/prec/prec.cpp
-CMakeFiles/psi.dir/src/prec/prec.cpp.o: CMakeFiles/psi.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/cuiyang/upsi-main-2/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/psi.dir/src/prec/prec.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/psi.dir/src/prec/prec.cpp.o -MF CMakeFiles/psi.dir/src/prec/prec.cpp.o.d -o CMakeFiles/psi.dir/src/prec/prec.cpp.o -c /Users/cuiyang/upsi-main-2/src/prec/prec.cpp
-
-CMakeFiles/psi.dir/src/prec/prec.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/psi.dir/src/prec/prec.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/cuiyang/upsi-main-2/src/prec/prec.cpp > CMakeFiles/psi.dir/src/prec/prec.cpp.i
-
-CMakeFiles/psi.dir/src/prec/prec.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/psi.dir/src/prec/prec.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/cuiyang/upsi-main-2/src/prec/prec.cpp -o CMakeFiles/psi.dir/src/prec/prec.cpp.s
-
-CMakeFiles/psi.dir/src/prec/receiver.cpp.o: CMakeFiles/psi.dir/flags.make
-CMakeFiles/psi.dir/src/prec/receiver.cpp.o: /Users/cuiyang/upsi-main-2/src/prec/receiver.cpp
-CMakeFiles/psi.dir/src/prec/receiver.cpp.o: CMakeFiles/psi.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/cuiyang/upsi-main-2/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/psi.dir/src/prec/receiver.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/psi.dir/src/prec/receiver.cpp.o -MF CMakeFiles/psi.dir/src/prec/receiver.cpp.o.d -o CMakeFiles/psi.dir/src/prec/receiver.cpp.o -c /Users/cuiyang/upsi-main-2/src/prec/receiver.cpp
-
-CMakeFiles/psi.dir/src/prec/receiver.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/psi.dir/src/prec/receiver.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/cuiyang/upsi-main-2/src/prec/receiver.cpp > CMakeFiles/psi.dir/src/prec/receiver.cpp.i
-
-CMakeFiles/psi.dir/src/prec/receiver.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/psi.dir/src/prec/receiver.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/cuiyang/upsi-main-2/src/prec/receiver.cpp -o CMakeFiles/psi.dir/src/prec/receiver.cpp.s
-
-CMakeFiles/psi.dir/src/prec/sender.cpp.o: CMakeFiles/psi.dir/flags.make
-CMakeFiles/psi.dir/src/prec/sender.cpp.o: /Users/cuiyang/upsi-main-2/src/prec/sender.cpp
-CMakeFiles/psi.dir/src/prec/sender.cpp.o: CMakeFiles/psi.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/cuiyang/upsi-main-2/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/psi.dir/src/prec/sender.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/psi.dir/src/prec/sender.cpp.o -MF CMakeFiles/psi.dir/src/prec/sender.cpp.o.d -o CMakeFiles/psi.dir/src/prec/sender.cpp.o -c /Users/cuiyang/upsi-main-2/src/prec/sender.cpp
-
-CMakeFiles/psi.dir/src/prec/sender.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/psi.dir/src/prec/sender.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/cuiyang/upsi-main-2/src/prec/sender.cpp > CMakeFiles/psi.dir/src/prec/sender.cpp.i
-
-CMakeFiles/psi.dir/src/prec/sender.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/psi.dir/src/prec/sender.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/cuiyang/upsi-main-2/src/prec/sender.cpp -o CMakeFiles/psi.dir/src/prec/sender.cpp.s
-
-CMakeFiles/psi.dir/src/vole/cf_batchpir.cpp.o: CMakeFiles/psi.dir/flags.make
-CMakeFiles/psi.dir/src/vole/cf_batchpir.cpp.o: /Users/cuiyang/upsi-main-2/src/vole/cf_batchpir.cpp
-CMakeFiles/psi.dir/src/vole/cf_batchpir.cpp.o: CMakeFiles/psi.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/cuiyang/upsi-main-2/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/psi.dir/src/vole/cf_batchpir.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/psi.dir/src/vole/cf_batchpir.cpp.o -MF CMakeFiles/psi.dir/src/vole/cf_batchpir.cpp.o.d -o CMakeFiles/psi.dir/src/vole/cf_batchpir.cpp.o -c /Users/cuiyang/upsi-main-2/src/vole/cf_batchpir.cpp
-
-CMakeFiles/psi.dir/src/vole/cf_batchpir.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/psi.dir/src/vole/cf_batchpir.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/cuiyang/upsi-main-2/src/vole/cf_batchpir.cpp > CMakeFiles/psi.dir/src/vole/cf_batchpir.cpp.i
-
-CMakeFiles/psi.dir/src/vole/cf_batchpir.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/psi.dir/src/vole/cf_batchpir.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/cuiyang/upsi-main-2/src/vole/cf_batchpir.cpp -o CMakeFiles/psi.dir/src/vole/cf_batchpir.cpp.s
-
 CMakeFiles/psi.dir/src/vole/receiver.cpp.o: CMakeFiles/psi.dir/flags.make
 CMakeFiles/psi.dir/src/vole/receiver.cpp.o: /Users/cuiyang/upsi-main-2/src/vole/receiver.cpp
 CMakeFiles/psi.dir/src/vole/receiver.cpp.o: CMakeFiles/psi.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/cuiyang/upsi-main-2/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/psi.dir/src/vole/receiver.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/cuiyang/upsi-main-2/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/psi.dir/src/vole/receiver.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/psi.dir/src/vole/receiver.cpp.o -MF CMakeFiles/psi.dir/src/vole/receiver.cpp.o.d -o CMakeFiles/psi.dir/src/vole/receiver.cpp.o -c /Users/cuiyang/upsi-main-2/src/vole/receiver.cpp
 
 CMakeFiles/psi.dir/src/vole/receiver.cpp.i: cmake_force
@@ -215,7 +103,7 @@ CMakeFiles/psi.dir/src/vole/receiver.cpp.s: cmake_force
 CMakeFiles/psi.dir/src/vole/sender.cpp.o: CMakeFiles/psi.dir/flags.make
 CMakeFiles/psi.dir/src/vole/sender.cpp.o: /Users/cuiyang/upsi-main-2/src/vole/sender.cpp
 CMakeFiles/psi.dir/src/vole/sender.cpp.o: CMakeFiles/psi.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/cuiyang/upsi-main-2/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/psi.dir/src/vole/sender.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/cuiyang/upsi-main-2/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/psi.dir/src/vole/sender.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/psi.dir/src/vole/sender.cpp.o -MF CMakeFiles/psi.dir/src/vole/sender.cpp.o.d -o CMakeFiles/psi.dir/src/vole/sender.cpp.o -c /Users/cuiyang/upsi-main-2/src/vole/sender.cpp
 
 CMakeFiles/psi.dir/src/vole/sender.cpp.i: cmake_force
@@ -229,7 +117,7 @@ CMakeFiles/psi.dir/src/vole/sender.cpp.s: cmake_force
 CMakeFiles/psi.dir/src/vole/vole.cpp.o: CMakeFiles/psi.dir/flags.make
 CMakeFiles/psi.dir/src/vole/vole.cpp.o: /Users/cuiyang/upsi-main-2/src/vole/vole.cpp
 CMakeFiles/psi.dir/src/vole/vole.cpp.o: CMakeFiles/psi.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/cuiyang/upsi-main-2/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/psi.dir/src/vole/vole.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/cuiyang/upsi-main-2/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/psi.dir/src/vole/vole.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/psi.dir/src/vole/vole.cpp.o -MF CMakeFiles/psi.dir/src/vole/vole.cpp.o.d -o CMakeFiles/psi.dir/src/vole/vole.cpp.o -c /Users/cuiyang/upsi-main-2/src/vole/vole.cpp
 
 CMakeFiles/psi.dir/src/vole/vole.cpp.i: cmake_force
@@ -240,39 +128,39 @@ CMakeFiles/psi.dir/src/vole/vole.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/psi.dir/src/vole/vole.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/cuiyang/upsi-main-2/src/vole/vole.cpp -o CMakeFiles/psi.dir/src/vole/vole.cpp.s
 
+CMakeFiles/psi.dir/src/vole/volePSI/SimpleIndex.cpp.o: CMakeFiles/psi.dir/flags.make
+CMakeFiles/psi.dir/src/vole/volePSI/SimpleIndex.cpp.o: /Users/cuiyang/upsi-main-2/src/vole/volePSI/SimpleIndex.cpp
+CMakeFiles/psi.dir/src/vole/volePSI/SimpleIndex.cpp.o: CMakeFiles/psi.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/cuiyang/upsi-main-2/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/psi.dir/src/vole/volePSI/SimpleIndex.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/psi.dir/src/vole/volePSI/SimpleIndex.cpp.o -MF CMakeFiles/psi.dir/src/vole/volePSI/SimpleIndex.cpp.o.d -o CMakeFiles/psi.dir/src/vole/volePSI/SimpleIndex.cpp.o -c /Users/cuiyang/upsi-main-2/src/vole/volePSI/SimpleIndex.cpp
+
+CMakeFiles/psi.dir/src/vole/volePSI/SimpleIndex.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/psi.dir/src/vole/volePSI/SimpleIndex.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/cuiyang/upsi-main-2/src/vole/volePSI/SimpleIndex.cpp > CMakeFiles/psi.dir/src/vole/volePSI/SimpleIndex.cpp.i
+
+CMakeFiles/psi.dir/src/vole/volePSI/SimpleIndex.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/psi.dir/src/vole/volePSI/SimpleIndex.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/cuiyang/upsi-main-2/src/vole/volePSI/SimpleIndex.cpp -o CMakeFiles/psi.dir/src/vole/volePSI/SimpleIndex.cpp.s
+
 # Object files for target psi
 psi_OBJECTS = \
-"CMakeFiles/psi.dir/src/CM20/CM20.cpp.o" \
-"CMakeFiles/psi.dir/src/CM20/receiver.cpp.o" \
-"CMakeFiles/psi.dir/src/CM20/sender.cpp.o" \
-"CMakeFiles/psi.dir/src/batchpir/batchpir.cpp.o" \
 "CMakeFiles/psi.dir/src/main.cpp.o" \
-"CMakeFiles/psi.dir/src/prec/prec.cpp.o" \
-"CMakeFiles/psi.dir/src/prec/receiver.cpp.o" \
-"CMakeFiles/psi.dir/src/prec/sender.cpp.o" \
-"CMakeFiles/psi.dir/src/vole/cf_batchpir.cpp.o" \
 "CMakeFiles/psi.dir/src/vole/receiver.cpp.o" \
 "CMakeFiles/psi.dir/src/vole/sender.cpp.o" \
-"CMakeFiles/psi.dir/src/vole/vole.cpp.o"
+"CMakeFiles/psi.dir/src/vole/vole.cpp.o" \
+"CMakeFiles/psi.dir/src/vole/volePSI/SimpleIndex.cpp.o"
 
 # External object files for target psi
 psi_EXTERNAL_OBJECTS =
 
-psi: CMakeFiles/psi.dir/src/CM20/CM20.cpp.o
-psi: CMakeFiles/psi.dir/src/CM20/receiver.cpp.o
-psi: CMakeFiles/psi.dir/src/CM20/sender.cpp.o
-psi: CMakeFiles/psi.dir/src/batchpir/batchpir.cpp.o
 psi: CMakeFiles/psi.dir/src/main.cpp.o
-psi: CMakeFiles/psi.dir/src/prec/prec.cpp.o
-psi: CMakeFiles/psi.dir/src/prec/receiver.cpp.o
-psi: CMakeFiles/psi.dir/src/prec/sender.cpp.o
-psi: CMakeFiles/psi.dir/src/vole/cf_batchpir.cpp.o
 psi: CMakeFiles/psi.dir/src/vole/receiver.cpp.o
 psi: CMakeFiles/psi.dir/src/vole/sender.cpp.o
 psi: CMakeFiles/psi.dir/src/vole/vole.cpp.o
+psi: CMakeFiles/psi.dir/src/vole/volePSI/SimpleIndex.cpp.o
 psi: CMakeFiles/psi.dir/build.make
 psi: /usr/local/lib/liblibOTe.a
-psi: libvectorized_batchpir.a
+psi: libBatchPIR.a
 psi: /opt/homebrew/lib/libssl.dylib
 psi: /opt/homebrew/lib/libcrypto.dylib
 psi: /usr/local/lib/libcryptoTools.a
@@ -285,7 +173,7 @@ psi: /opt/homebrew/opt/boost@1.85/lib/libboost_atomic-mt.dylib
 psi: /usr/local/lib/libmacoro.a
 psi: /opt/homebrew/lib/libseal.4.3.2.dylib
 psi: CMakeFiles/psi.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/Users/cuiyang/upsi-main-2/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Linking CXX executable psi"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/Users/cuiyang/upsi-main-2/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Linking CXX executable psi"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/psi.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

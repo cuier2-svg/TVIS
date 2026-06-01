@@ -1,4 +1,4 @@
 /Users/cuiyang/upsi-main-2/build/CMakeFiles/psi.dir
-/Users/cuiyang/upsi-main-2/build/CMakeFiles/vectorized_batchpir.dir
+/Users/cuiyang/upsi-main-2/build/CMakeFiles/BatchPIR.dir
 /Users/cuiyang/upsi-main-2/build/CMakeFiles/edit_cache.dir
 /Users/cuiyang/upsi-main-2/build/CMakeFiles/rebuild_cache.dir

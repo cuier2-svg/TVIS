@@ -64,12 +64,12 @@ CMAKE_BINARY_DIR = /Users/cuiyang/upsi-main-2/build
 
 # The main recursive "all" target.
 all: CMakeFiles/psi.dir/all
-all: CMakeFiles/vectorized_batchpir.dir/all
+all: CMakeFiles/BatchPIR.dir/all
 .PHONY : all
 
 # The main recursive "codegen" target.
 codegen: CMakeFiles/psi.dir/codegen
-codegen: CMakeFiles/vectorized_batchpir.dir/codegen
+codegen: CMakeFiles/BatchPIR.dir/codegen
 .PHONY : codegen
 
 # The main recursive "preinstall" target.
@@ -78,22 +78,22 @@ preinstall:
 
 # The main recursive "clean" target.
 clean: CMakeFiles/psi.dir/clean
-clean: CMakeFiles/vectorized_batchpir.dir/clean
+clean: CMakeFiles/BatchPIR.dir/clean
 .PHONY : clean
 
 #=============================================================================
 # Target rules for target CMakeFiles/psi.dir
 
 # All Build rule for target.
-CMakeFiles/psi.dir/all: CMakeFiles/vectorized_batchpir.dir/all
+CMakeFiles/psi.dir/all: CMakeFiles/BatchPIR.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/psi.dir/build.make CMakeFiles/psi.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/psi.dir/build.make CMakeFiles/psi.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/cuiyang/upsi-main-2/build/CMakeFiles --progress-num=1,2,3,4,5,6,7,8,9,10,11,12,13 "Built target psi"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/cuiyang/upsi-main-2/build/CMakeFiles --progress-num=8,9,10,11,12,13 "Built target psi"
 .PHONY : CMakeFiles/psi.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/psi.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/cuiyang/upsi-main-2/build/CMakeFiles 20
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/cuiyang/upsi-main-2/build/CMakeFiles 13
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/psi.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /Users/cuiyang/upsi-main-2/build/CMakeFiles 0
 .PHONY : CMakeFiles/psi.dir/rule
@@ -105,7 +105,7 @@ psi: CMakeFiles/psi.dir/rule
 # codegen rule for target.
 CMakeFiles/psi.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/psi.dir/build.make CMakeFiles/psi.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/cuiyang/upsi-main-2/build/CMakeFiles --progress-num=1,2,3,4,5,6,7,8,9,10,11,12,13 "Finished codegen for target psi"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/cuiyang/upsi-main-2/build/CMakeFiles --progress-num=8,9,10,11,12,13 "Finished codegen for target psi"
 .PHONY : CMakeFiles/psi.dir/codegen
 
 # clean rule for target.
@@ -114,36 +114,36 @@ CMakeFiles/psi.dir/clean:
 .PHONY : CMakeFiles/psi.dir/clean
 
 #=============================================================================
-# Target rules for target CMakeFiles/vectorized_batchpir.dir
+# Target rules for target CMakeFiles/BatchPIR.dir
 
 # All Build rule for target.
-CMakeFiles/vectorized_batchpir.dir/all:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/vectorized_batchpir.dir/build.make CMakeFiles/vectorized_batchpir.dir/depend
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/vectorized_batchpir.dir/build.make CMakeFiles/vectorized_batchpir.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/cuiyang/upsi-main-2/build/CMakeFiles --progress-num=14,15,16,17,18,19,20 "Built target vectorized_batchpir"
-.PHONY : CMakeFiles/vectorized_batchpir.dir/all
+CMakeFiles/BatchPIR.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/BatchPIR.dir/build.make CMakeFiles/BatchPIR.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/BatchPIR.dir/build.make CMakeFiles/BatchPIR.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/cuiyang/upsi-main-2/build/CMakeFiles --progress-num=1,2,3,4,5,6,7 "Built target BatchPIR"
+.PHONY : CMakeFiles/BatchPIR.dir/all
 
 # Build rule for subdir invocation for target.
-CMakeFiles/vectorized_batchpir.dir/rule: cmake_check_build_system
+CMakeFiles/BatchPIR.dir/rule: cmake_check_build_system
 	$(CMAKE_COMMAND) -E cmake_progress_start /Users/cuiyang/upsi-main-2/build/CMakeFiles 7
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/vectorized_batchpir.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/BatchPIR.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /Users/cuiyang/upsi-main-2/build/CMakeFiles 0
-.PHONY : CMakeFiles/vectorized_batchpir.dir/rule
+.PHONY : CMakeFiles/BatchPIR.dir/rule
 
 # Convenience name for target.
-vectorized_batchpir: CMakeFiles/vectorized_batchpir.dir/rule
-.PHONY : vectorized_batchpir
+BatchPIR: CMakeFiles/BatchPIR.dir/rule
+.PHONY : BatchPIR
 
 # codegen rule for target.
-CMakeFiles/vectorized_batchpir.dir/codegen:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/vectorized_batchpir.dir/build.make CMakeFiles/vectorized_batchpir.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/cuiyang/upsi-main-2/build/CMakeFiles --progress-num=14,15,16,17,18,19,20 "Finished codegen for target vectorized_batchpir"
-.PHONY : CMakeFiles/vectorized_batchpir.dir/codegen
+CMakeFiles/BatchPIR.dir/codegen:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/BatchPIR.dir/build.make CMakeFiles/BatchPIR.dir/codegen
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/cuiyang/upsi-main-2/build/CMakeFiles --progress-num=1,2,3,4,5,6,7 "Finished codegen for target BatchPIR"
+.PHONY : CMakeFiles/BatchPIR.dir/codegen
 
 # clean rule for target.
-CMakeFiles/vectorized_batchpir.dir/clean:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/vectorized_batchpir.dir/build.make CMakeFiles/vectorized_batchpir.dir/clean
-.PHONY : CMakeFiles/vectorized_batchpir.dir/clean
+CMakeFiles/BatchPIR.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/BatchPIR.dir/build.make CMakeFiles/BatchPIR.dir/clean
+.PHONY : CMakeFiles/BatchPIR.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

@@ -23,9 +23,12 @@ if (CMAKE_BUILD_TYPE MATCHES Release)
     add_compile_options(-O2)
 endif ()
 
-file(GLOB SOURCES "src/*/*.cpp" "src/*/*.hpp" "src/*.cpp" "src/*.hpp")
-list(APPEND SOURCES "src/vole/cf_batchpir.cpp" "src/vole/cf_batchpir.hpp")
-add_executable(psi ${SOURCES})
+add_executable(psi
+        src/main.cpp
+        src/vole/receiver.cpp
+        src/vole/sender.cpp
+        src/vole/vole.cpp
+        src/vole/volePSI/SimpleIndex.cpp)
 
 target_include_directories(psi PUBLIC cuckoofilter)
 
@@ -42,32 +45,32 @@ find_package(libOTe REQUIRED
         NO_CMAKE_FIND_ROOT_PATH)
 target_link_libraries(psi oc::libOTe)
 
-option(ENABLE_BATCHPIR "Build the vectorized BatchPIR integration when SEAL is available" ON)
+option(ENABLE_BATCHPIR "Build the BatchPIR integration when SEAL is available" ON)
 
 if (ENABLE_BATCHPIR)
     find_package(SEAL QUIET)
     if (SEAL_FOUND)
-        set(BATCHPIR_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/third_party/vectorized_batchpir)
-        add_library(vectorized_batchpir STATIC
+        set(BATCHPIR_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/BatchPIR)
+        add_library(BatchPIR STATIC
                 ${BATCHPIR_ROOT}/src/batchpirclient.cpp
                 ${BATCHPIR_ROOT}/src/batchpirparams.cpp
                 ${BATCHPIR_ROOT}/src/batchpirserver.cpp
                 ${BATCHPIR_ROOT}/src/client.cpp
                 ${BATCHPIR_ROOT}/src/pirparams.cpp
                 ${BATCHPIR_ROOT}/src/server.cpp)
-        target_include_directories(vectorized_batchpir PUBLIC
+        target_include_directories(BatchPIR PUBLIC
                 ${BATCHPIR_ROOT}
                 ${BATCHPIR_ROOT}/header)
-        target_compile_features(vectorized_batchpir PUBLIC cxx_std_11)
+        target_compile_features(BatchPIR PUBLIC cxx_std_11)
         if (TARGET SEAL::seal)
-            target_link_libraries(vectorized_batchpir PUBLIC SEAL::seal)
+            target_link_libraries(BatchPIR PUBLIC SEAL::seal)
         elseif (TARGET SEAL::seal_shared)
-            target_link_libraries(vectorized_batchpir PUBLIC SEAL::seal_shared)
+            target_link_libraries(BatchPIR PUBLIC SEAL::seal_shared)
         else ()
             message(FATAL_ERROR "SEAL was found, but no supported SEAL CMake target is available")
         endif ()
 
-        target_link_libraries(psi vectorized_batchpir)
+        target_link_libraries(psi BatchPIR)
         target_compile_definitions(psi PRIVATE PSI_ENABLE_BATCHPIR=1)
     else ()
         message(STATUS "SEAL not found; building without BatchPIR. Set ENABLE_BATCHPIR=OFF to silence this optional integration.")

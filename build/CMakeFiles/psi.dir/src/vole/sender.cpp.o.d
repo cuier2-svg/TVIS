@@ -2309,10 +2309,10 @@ CMakeFiles/psi.dir/src/vole/sender.cpp.o: \
   /opt/homebrew/include/openssl/configuration.h \
   /opt/homebrew/include/openssl/opensslv.h \
   /opt/homebrew/include/openssl/e_os2.h \
-  /Users/cuiyang/upsi-main-2/third_party/vectorized_batchpir/header/batchpirclient.h \
-  /Users/cuiyang/upsi-main-2/third_party/vectorized_batchpir/header/batchpirparams.h \
-  /Users/cuiyang/upsi-main-2/third_party/vectorized_batchpir/header/database_constants.h \
-  /Users/cuiyang/upsi-main-2/third_party/vectorized_batchpir/header/../src/utils.h \
+  /Users/cuiyang/upsi-main-2/BatchPIR/header/batchpirclient.h \
+  /Users/cuiyang/upsi-main-2/BatchPIR/header/batchpirparams.h \
+  /Users/cuiyang/upsi-main-2/BatchPIR/header/database_constants.h \
+  /Users/cuiyang/upsi-main-2/BatchPIR/header/../src/utils.h \
   /opt/homebrew/include/SEAL-4.3/seal/seal.h \
   /opt/homebrew/include/SEAL-4.3/seal/batchencoder.h \
   /opt/homebrew/include/SEAL-4.3/seal/context.h \
@@ -2371,8 +2371,8 @@ CMakeFiles/psi.dir/src/vole/sender.cpp.o: \
   /opt/homebrew/include/SEAL-4.3/seal/relinkeys.h \
   /opt/homebrew/include/SEAL-4.3/seal/keygenerator.h \
   /opt/homebrew/include/SEAL-4.3/seal/randomtostd.h \
-  /Users/cuiyang/upsi-main-2/third_party/vectorized_batchpir/header/client.h \
-  /Users/cuiyang/upsi-main-2/third_party/vectorized_batchpir/header/pirparams.h \
-  /Users/cuiyang/upsi-main-2/third_party/vectorized_batchpir/src/utils.h \
-  /Users/cuiyang/upsi-main-2/third_party/vectorized_batchpir/header/batchpirserver.h \
-  /Users/cuiyang/upsi-main-2/third_party/vectorized_batchpir/header/server.h
+  /Users/cuiyang/upsi-main-2/BatchPIR/header/client.h \
+  /Users/cuiyang/upsi-main-2/BatchPIR/header/pirparams.h \
+  /Users/cuiyang/upsi-main-2/BatchPIR/src/utils.h \
+  /Users/cuiyang/upsi-main-2/BatchPIR/header/batchpirserver.h \
+  /Users/cuiyang/upsi-main-2/BatchPIR/header/server.h
