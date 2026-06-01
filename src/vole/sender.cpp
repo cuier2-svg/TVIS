@@ -1,5 +1,7 @@
 #include "vole.hpp"
 
+#include <array>
+
 #ifdef PSI_ENABLE_BATCHPIR
 #include "batchpirclient.h"
 #include "batchpirparams.h"
@@ -15,6 +17,16 @@
 using namespace std;
 
 namespace vole {
+
+  namespace {
+    using Clock = std::chrono::high_resolution_clock;
+
+    i64 elapsedMs(Clock::time_point start,
+                  Clock::time_point end = Clock::now()) {
+      return std::chrono::duration_cast<std::chrono::milliseconds>(end - start)
+          .count();
+    }
+  }
 
 #ifdef PSI_ENABLE_BATCHPIR
   namespace {
@@ -131,11 +143,12 @@ namespace vole {
       return rawDb;
     }
 
-    void printElapsed(const char *label,
-                      std::chrono::high_resolution_clock::time_point start) {
+    i64 printElapsed(const char *label,
+                     std::chrono::high_resolution_clock::time_point start) {
       auto end = std::chrono::high_resolution_clock::now();
       auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
       std::cout << label << "=" << ms.count() << "\n";
+      return ms.count();
     }
   }
 #endif
@@ -153,8 +166,7 @@ namespace vole {
   }
 
   void VOLE::runSender(PRNG prng, Socket ch, const std::vector<block> &senderSet) {
-    Timer timer;
-    timer.setTimePoint("Sender start");
+    auto setupStart = Clock::now();
 
     PRNG commonPrng(commonSeed);
     vector<u128> cfParams(3);
@@ -193,17 +205,16 @@ namespace vole {
       cf.Add((u64 *) &hash);
     }
 
-    timer.setTimePoint("Sender setup done");
+    auto senderSetupMs = elapsedMs(setupStart);
+    std::cout << "time.sender_setup_ms=" << senderSetupMs << "\n";
 
     if (!indexedCf) {
       vector<u8> cfData = cf.serialize();
       u64 cfSize = cfData.size();
       macoro::sync_wait(ch.send(cfSize));
       macoro::sync_wait(ch.send(cfData));
-      timer.setTimePoint("Sender setup sent");
-    } else {
-      timer.setTimePoint("Sender setup kept local");
     }
+    macoro::sync_wait(ch.send(senderSetupMs));
 
     AlignedUnVector<block> voleC(kSize);
 
@@ -222,6 +233,11 @@ namespace vole {
     }
     macoro::sync_wait(ch.send(okvsData));
 
+    i64 senderBatchPirServerPrepMs = 0;
+    i64 senderBatchPirRecvQueriesMs = 0;
+    i64 senderBatchPirResponseMs = 0;
+    i64 senderBatchPirSendResponsesMs = 0;
+
     if (batchPirCf) {
 #ifdef PSI_ENABLE_BATCHPIR
       u64 bucketCount;
@@ -235,24 +251,31 @@ namespace vole {
 
       auto bpStart = std::chrono::high_resolution_clock::now();
       BatchPIRServer server(params, makeCfRawDb(cf));
-      printElapsed("time.sender_batchpir_server_prep_ms", bpStart);
+      senderBatchPirServerPrepMs =
+          printElapsed("time.sender_batchpir_server_prep_ms", bpStart);
       std::cout << "param.batchpir_poly_degree="
                 << encryptionParams.poly_modulus_degree() << "\n";
       u64 maxBucketSize = params.get_max_bucket_size();
       macoro::sync_wait(ch.send(maxBucketSize));
-      auto stepStart = std::chrono::high_resolution_clock::now();
       auto keys = recvBatchPirKeys(ch, context);
-      printElapsed("time.sender_batchpir_recv_keys_ms", stepStart);
-      stepStart = std::chrono::high_resolution_clock::now();
+      auto stepStart = std::chrono::high_resolution_clock::now();
       auto queries = recvBatchPirQueries(ch, context);
-      printElapsed("time.sender_batchpir_recv_queries_ms", stepStart);
-      stepStart = std::chrono::high_resolution_clock::now();
+      senderBatchPirRecvQueriesMs =
+          printElapsed("time.sender_batchpir_recv_queries_ms", stepStart);
       server.set_client_keys(0, keys);
+      stepStart = std::chrono::high_resolution_clock::now();
       auto responses = server.generate_response(0, queries);
-      printElapsed("time.sender_batchpir_response_ms", stepStart);
+      senderBatchPirResponseMs =
+          printElapsed("time.sender_batchpir_response_ms", stepStart);
       stepStart = std::chrono::high_resolution_clock::now();
       sendBatchPirResponses(ch, responses);
-      printElapsed("time.sender_batchpir_send_responses_ms", stepStart);
+      senderBatchPirSendResponsesMs =
+          printElapsed("time.sender_batchpir_send_responses_ms", stepStart);
+      std::array<i64, 3> senderBatchPirTimings{
+          senderBatchPirRecvQueriesMs,
+          senderBatchPirResponseMs,
+          senderBatchPirSendResponsesMs};
+      macoro::sync_wait(ch.send(senderBatchPirTimings));
       std::cout << "param.cf_buckets=" << bucketCount << "\n";
 #else
       throw std::runtime_error("BatchPIR support was not built");
@@ -275,14 +298,7 @@ namespace vole {
       std::cout << "param.cf_buckets=" << bucketIds.size() << "\n";
     }
 
-    timer.setTimePoint("Sender done");
-    auto senderSetupMs =
-        std::chrono::duration_cast<std::chrono::milliseconds>(
-            timer["Sender setup done"] - timer["Sender start"]).count();
-    auto senderTotalMs =
-        std::chrono::duration_cast<std::chrono::milliseconds>(
-            timer["Sender done"] - timer["Sender start"]).count();
-    std::cout << "time.sender_setup_ms=" << senderSetupMs << "\n";
+    auto senderTotalMs = senderSetupMs + senderBatchPirServerPrepMs;
     std::cout << "time.sender_total_ms=" << senderTotalMs << "\n";
   }
 

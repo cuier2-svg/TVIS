@@ -20,6 +20,16 @@ using namespace std;
 
 namespace vole {
 
+  namespace {
+    using Clock = std::chrono::high_resolution_clock;
+
+    i64 elapsedMs(Clock::time_point start,
+                  Clock::time_point end = Clock::now()) {
+      return std::chrono::duration_cast<std::chrono::milliseconds>(end - start)
+          .count();
+    }
+  }
+
 #ifdef PSI_ENABLE_BATCHPIR
   namespace {
     constexpr size_t kCfBucketEntrySize = CuckooFilter::TagsPerBucket() * sizeof(u32);
@@ -132,11 +142,12 @@ namespace vole {
              (static_cast<u32>(entry[offset + 3]) << 24);
     }
 
-    void printElapsed(const char *label,
-                      std::chrono::high_resolution_clock::time_point start) {
+    i64 printElapsed(const char *label,
+                     std::chrono::high_resolution_clock::time_point start) {
       auto end = std::chrono::high_resolution_clock::now();
       auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
       std::cout << label << "=" << ms.count() << "\n";
+      return ms.count();
     }
   }
 #endif
@@ -161,9 +172,6 @@ namespace vole {
   }
 
   void VOLE::runReceiver(osuCrypto::PRNG prng, osuCrypto::Socket ch, const std::vector<block> &receiverSet) {
-    Timer timer;
-    timer.setTimePoint("Receiver start");
-
     PRNG commonPrng(commonSeed);
     vector<u128> cfParams(3);
     commonPrng.get((u8 *) cfParams.data(), cfParams.size() * sizeof(u128));
@@ -189,17 +197,16 @@ namespace vole {
     CuckooFilter cf(senderSize);
     cf.SetTwoIndependentMultiplyShiftParams(cfParams);
 
+    i64 receiverSetupMs = 0;
     if (!indexedCf) {
+      auto setupStart = Clock::now();
       u64 cfSize;
       cp::sync_wait(ch.recv(cfSize));
-      timer.setTimePoint("Receiver setup start");
       vector<u8> cfData(cfSize);
       cp::sync_wait(ch.recv(cfData));
       cf.deserialize(cfData);
 //    cout << cf.Info() << endl;
-      timer.setTimePoint("Receiver setup finished");
-    } else {
-      timer.setTimePoint("Receiver setup skipped");
+      receiverSetupMs = elapsedMs(setupStart);
     }
 
     macoro::sync_wait(ch.flush());
@@ -209,8 +216,17 @@ namespace vole {
     AlignedUnVector<block> voleB(kSize);
 
     // Silent VOLE
+    auto voleStart = Clock::now();
+    i64 senderSetupMs = 0;
+    macoro::sync_wait(ch.recv(senderSetupMs));
+    const u64 timingReportBytes = sizeof(senderSetupMs);
     macoro::sync_wait(voleReceiver.silentReceive(voleB, voleA, prng, ch));
-    timer.setTimePoint("Receiver silent VOLE finished");
+    auto receiverVoleMs = elapsedMs(voleStart);
+    if (receiverVoleMs > senderSetupMs) {
+      receiverVoleMs -= senderSetupMs;
+    } else {
+      receiverVoleMs = 0;
+    }
 
     // Noisy VOLE
 //    IknpOtExtSender otExtSender;
@@ -246,6 +262,15 @@ namespace vole {
     okvs.decode<block>(receiverSet, decodedValues, serverOKVS);
 
     u64 psi = 0;
+    i64 receiverBatchPirQueryMs = 0;
+    i64 receiverBatchPirSendQueriesMs = 0;
+    i64 receiverBatchPirRecvResponsesMs = 0;
+    i64 receiverBatchPirDecodeMs = 0;
+    i64 senderBatchPirRecvQueriesMs = 0;
+    i64 senderBatchPirResponseMs = 0;
+    i64 senderBatchPirSendResponsesMs = 0;
+    u64 keyBytes = 0;
+    u64 senderBatchPirTimingBytes = 0;
     if (!indexedCf) {
       for (u64 i = 0; i < receiverSize; i++) {
         SHA256((u8 *) &decodedValues[i], sizeof(block), hash);
@@ -284,27 +309,31 @@ namespace vole {
         u64 maxBucketSize = 0;
         macoro::sync_wait(ch.recv(maxBucketSize));
         params.set_max_bucket_size(maxBucketSize);
-        auto bpStart = std::chrono::high_resolution_clock::now();
         BatchPIRClient client(params);
-        printElapsed("time.receiver_batchpir_client_prep_ms", bpStart);
         auto queryCipherStart = ch.bytesSent() + ch.bytesReceived();
         auto stepStart = std::chrono::high_resolution_clock::now();
         auto queriesForPir = client.create_queries(bucketIds);
-        printElapsed("time.receiver_batchpir_query_ms", stepStart);
-        stepStart = std::chrono::high_resolution_clock::now();
-        auto keyBytes = sendKeys(ch, client.get_public_keys());
-        printElapsed("time.receiver_batchpir_send_keys_ms", stepStart);
+        receiverBatchPirQueryMs =
+            printElapsed("time.receiver_batchpir_query_ms", stepStart);
+        keyBytes = sendKeys(ch, client.get_public_keys());
         stepStart = std::chrono::high_resolution_clock::now();
         auto queryBytes = sendBatchPirQueries(ch, queriesForPir);
-        printElapsed("time.receiver_batchpir_send_queries_ms", stepStart);
+        receiverBatchPirSendQueriesMs =
+            printElapsed("time.receiver_batchpir_send_queries_ms", stepStart);
         stepStart = std::chrono::high_resolution_clock::now();
         u64 responseBytes = 0;
         auto responses = recvBatchPirResponses(ch, context, responseBytes);
-        printElapsed("time.receiver_batchpir_recv_responses_ms", stepStart);
+        receiverBatchPirRecvResponsesMs =
+            printElapsed("time.receiver_batchpir_recv_responses_ms", stepStart);
+        std::array<i64, 3> senderBatchPirTimings{};
+        macoro::sync_wait(ch.recv(senderBatchPirTimings));
+        senderBatchPirTimingBytes = sizeof(senderBatchPirTimings);
+        senderBatchPirRecvQueriesMs = senderBatchPirTimings[0];
+        senderBatchPirResponseMs = senderBatchPirTimings[1];
+        senderBatchPirSendResponsesMs = senderBatchPirTimings[2];
         auto queryCipherEnd = ch.bytesSent() + ch.bytesReceived();
         stepStart = std::chrono::high_resolution_clock::now();
         auto decodedBucketGroups = client.decode_responses_chunks(responses);
-        printElapsed("time.receiver_batchpir_decode_ms", stepStart);
         auto originalCuckooTable = client.get_original_cuckoo_table();
 
         u64 cuckooOffset = 0;
@@ -331,12 +360,18 @@ namespace vole {
             ++cuckooOffset;
           }
         }
+        receiverBatchPirDecodeMs =
+            printElapsed("time.receiver_batchpir_decode_ms", stepStart);
 
+        auto batchPirData = queryCipherEnd - queryCipherStart;
+        if (batchPirData >= keyBytes) {
+          batchPirData -= keyBytes;
+        } else {
+          batchPirData = 0;
+        }
         std::cout << "comm.batchpir_total_mb="
-                  << (queryCipherEnd - queryCipherStart) / std::pow(2.0, 20)
+                  << batchPirData / std::pow(2.0, 20)
                   << "\n";
-        std::cout << "comm.batchpir_keys_mb="
-                  << keyBytes / std::pow(2.0, 20) << "\n";
         std::cout << "comm.batchpir_query_mb="
                   << queryBytes / std::pow(2.0, 20) << "\n";
         std::cout << "comm.batchpir_response_mb="
@@ -393,24 +428,16 @@ namespace vole {
       }
     }
 
-    timer.setTimePoint("Receiver intersection computed");
-    auto receiverSetupMs =
-        std::chrono::duration_cast<std::chrono::milliseconds>(
-            timer["Receiver setup skipped"] - timer["Receiver start"]).count();
-    if (!indexedCf) {
-      receiverSetupMs =
-          std::chrono::duration_cast<std::chrono::milliseconds>(
-              timer["Receiver setup finished"] - timer["Receiver start"]).count();
-    }
-    auto receiverVoleMs =
-        std::chrono::duration_cast<std::chrono::milliseconds>(
-            timer["Receiver silent VOLE finished"] - timer["Receiver start"]).count();
     auto receiverTotalMs =
-        std::chrono::duration_cast<std::chrono::milliseconds>(
-            timer["Receiver intersection computed"] - timer["Receiver start"]).count();
+        receiverVoleMs + receiverBatchPirQueryMs +
+        receiverBatchPirSendQueriesMs + senderBatchPirRecvQueriesMs +
+        senderBatchPirResponseMs + senderBatchPirSendResponsesMs +
+        receiverBatchPirRecvResponsesMs + receiverBatchPirDecodeMs;
 
-    std::cout << "time.receiver_setup_ms=" << receiverSetupMs << "\n";
-    std::cout << "time.receiver_vole_done_ms=" << receiverVoleMs << "\n";
+    if (receiverSetupMs != 0) {
+      std::cout << "time.receiver_setup_ms=" << receiverSetupMs << "\n";
+    }
+    std::cout << "time.receiver_vole_ms=" << receiverVoleMs << "\n";
     std::cout << "time.receiver_total_ms=" << receiverTotalMs << "\n";
     std::cout << "result.intersection=" << psi << "\n";
 
@@ -438,13 +465,18 @@ namespace vole {
     u64 sentData = ch.bytesSent();
     u64 recvData = ch.bytesReceived();
     u64 totalData = sentData + recvData;
-    u64 onlineData = totalData - setupData;
+    const u64 excludedData =
+        keyBytes + timingReportBytes + senderBatchPirTimingBytes;
+    if (totalData >= excludedData) {
+      totalData -= excludedData;
+    } else {
+      totalData = 0;
+    }
+    u64 onlineData = totalData >= setupData ? totalData - setupData : 0;
 
 //  std::cout << "Receiver sent communication: " << sentData / std::pow(2.0, 20) << " MB\n";
 //  std::cout << "Receiver received communication: " << recvData / std::pow(2.0, 20) << " MB\n";
-    std::cout << "comm.setup_mb=" << setupData / std::pow(2.0, 20) << "\n";
     std::cout << "comm.online_mb=" << onlineData / std::pow(2.0, 20) << "\n";
-    std::cout << "comm.total_mb=" << totalData / std::pow(2.0, 20) << "\n";
   }
 
 }

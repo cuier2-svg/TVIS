@@ -4,6 +4,15 @@ using namespace std;
 
 namespace prec {
 
+namespace {
+
+i64 elapsedMs(Timer::timeUnit start, Timer::timeUnit end) {
+  return std::chrono::duration_cast<std::chrono::milliseconds>(end - start)
+      .count();
+}
+
+}
+
 void PreC::runSender() {
   auto ch = cp::asioConnect("127.0.0.1:7700", true);
 
@@ -116,7 +125,18 @@ void PreC::runSender(PRNG prng, Socket ch, const std::vector<block> &senderSet) 
   cp::sync_wait(ch.send(matrixP));
 
   timer.setTimePoint("Sender done");
-  cout << timer << endl;
+  std::cout << "time.sender_setup_ms="
+            << elapsedMs(timer["Sender start"],
+                         timer["Sender setup done"]) << "\n";
+  std::cout << "time.sender_setup_send_ms="
+            << elapsedMs(timer["Sender setup done"],
+                         timer["Sender setup sent"]) << "\n";
+  std::cout << "time.sender_online_ms="
+            << elapsedMs(timer["Sender setup sent"],
+                         timer["Sender done"]) << "\n";
+  std::cout << "time.sender_total_ms="
+            << elapsedMs(timer["Sender start"],
+                         timer["Sender done"]) << "\n";
 
 //  cp::sync_wait(ch.send(matrixR));
 //  cp::sync_wait(ch.send(choices));

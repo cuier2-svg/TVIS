@@ -2,6 +2,15 @@
 
 namespace CM20 {
 
+namespace {
+
+i64 elapsedMs(Timer::timeUnit start, Timer::timeUnit end) {
+  return std::chrono::duration_cast<std::chrono::milliseconds>(end - start)
+      .count();
+}
+
+}
+
 void ReceiverRun(PRNG &prng,
                  Socket &ch,
                  block commonSeed,
@@ -181,7 +190,6 @@ void ReceiverRun(PRNG &prng,
 
   }
 
-  std::cout << "Receiver matrix sent and transposed hash input computed\n";
   timer.setTimePoint("Receiver matrix sent and transposed hash input computed");
 
 
@@ -257,7 +265,27 @@ void ReceiverRun(PRNG &prng,
   }
   timer.setTimePoint("Receiver intersection computed");
 
-  std::cout << timer;
+  std::cout << "time.receiver_base_ot_ms="
+            << elapsedMs(timer["Receiver start"],
+                         timer["Receiver base OT finished"]) << "\n";
+  std::cout << "time.receiver_init_ms="
+            << elapsedMs(timer["Receiver base OT finished"],
+                         timer["Receiver initialized"]) << "\n";
+  std::cout << "time.receiver_transform_ms="
+            << elapsedMs(timer["Receiver initialized"],
+                         timer["Receiver set transformed"]) << "\n";
+  std::cout << "time.receiver_matrix_ms="
+            << elapsedMs(timer["Receiver set transformed"],
+                         timer["Receiver matrix sent and transposed hash input computed"]) << "\n";
+  std::cout << "time.receiver_hash_ms="
+            << elapsedMs(timer["Receiver matrix sent and transposed hash input computed"],
+                         timer["Receiver hash outputs computed"]) << "\n";
+  std::cout << "time.receiver_intersection_ms="
+            << elapsedMs(timer["Receiver hash outputs computed"],
+                         timer["Receiver intersection computed"]) << "\n";
+  std::cout << "time.receiver_total_ms="
+            << elapsedMs(timer["Receiver start"],
+                         timer["Receiver intersection computed"]) << "\n";
 
 
 

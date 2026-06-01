@@ -95,7 +95,7 @@
 			"compileCommandFragments" : 
 			[
 				{
-					"fragment" : "-g -std=gnu++20"
+					"fragment" : "-g -std=gnu++20 -arch arm64"
 				},
 				{
 					"backtrace" : 3,

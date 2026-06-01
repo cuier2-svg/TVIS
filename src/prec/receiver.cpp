@@ -4,6 +4,15 @@ using namespace std;
 
 namespace prec {
 
+namespace {
+
+i64 elapsedMs(Timer::timeUnit start, Timer::timeUnit end) {
+  return std::chrono::duration_cast<std::chrono::milliseconds>(end - start)
+      .count();
+}
+
+}
+
 void PreC::runReceiver() {
   auto ch = cp::asioConnect("127.0.0.1:7700", false);
 
@@ -54,9 +63,9 @@ void PreC::runReceiver(osuCrypto::PRNG prng, osuCrypto::Socket ch, const std::ve
 
 //  Matrix<u8> senderHashes(senderSize, hashLengthInBytes);
 //  cp::sync_wait(ch.recv(senderHashes));
+  timer.setTimePoint("Receiver setup start");
   u64 cfSize;
   cp::sync_wait(ch.recv(cfSize));
-  timer.setTimePoint("Receiver setup start");
   vector<u8> cfData(cfSize);
   cp::sync_wait(ch.recv(cfData));
   CuckooFilter cf(senderSize);
@@ -161,7 +170,21 @@ void PreC::runReceiver(osuCrypto::PRNG prng, osuCrypto::Socket ch, const std::ve
 //  }
 
   timer.setTimePoint("Receiver intersection computed");
-  cout << timer << endl;
+  std::cout << "time.receiver_setup_ms="
+            << elapsedMs(timer["Receiver setup start"],
+                         timer["Receiver setup finished"]) << "\n";
+  std::cout << "time.receiver_matrix_d_ms="
+            << elapsedMs(timer["Receiver setup finished"],
+                         timer["MatrixD computed"]) << "\n";
+  std::cout << "time.receiver_matrix_a_ms="
+            << elapsedMs(timer["MatrixD computed"],
+                         timer["MatrixA computed"]) << "\n";
+  std::cout << "time.receiver_intersection_ms="
+            << elapsedMs(timer["MatrixA computed"],
+                         timer["Receiver intersection computed"]) << "\n";
+  std::cout << "time.receiver_total_ms="
+            << elapsedMs(timer["Receiver start"],
+                         timer["Receiver intersection computed"]) << "\n";
 
   std::cout << "Receiver intersection size: " << psi << "\n";
   if (psi == 100) {

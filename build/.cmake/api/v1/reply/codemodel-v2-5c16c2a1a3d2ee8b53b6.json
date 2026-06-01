@@ -311,14 +311,14 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "psi::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-psi-Debug-256b540f0264b0ed8e90.json",
+					"jsonFile" : "target-psi-Debug-fae4c79eaafb4ab7bd3e.json",
 					"name" : "psi",
 					"projectIndex" : 0
 				},
 				{
 					"directoryIndex" : 0,
 					"id" : "vectorized_batchpir::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-vectorized_batchpir-Debug-aeeb6ca406b2b88611ee.json",
+					"jsonFile" : "target-vectorized_batchpir-Debug-3478c73e2dbd1ef67616.json",
 					"name" : "vectorized_batchpir",
 					"projectIndex" : 0
 				}

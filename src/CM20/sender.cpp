@@ -2,6 +2,15 @@
 
 namespace CM20 {
 
+namespace {
+
+i64 elapsedMs(Timer::timeUnit start, Timer::timeUnit end) {
+  return std::chrono::duration_cast<std::chrono::milliseconds>(end - start)
+      .count();
+}
+
+}
+
 void SenderRun(PRNG &prng,
                Socket &ch,
                block commonSeed,
@@ -206,7 +215,21 @@ void SenderRun(PRNG &prng,
   // std::cout << "Sender hash outputs computed and sent\n";
   timer.setTimePoint("Sender hash outputs computed and sent");
 
-  std::cout << timer;
+  std::cout << "time.sender_base_ot_ms="
+            << elapsedMs(timer["Sender start"],
+                         timer["Sender base OT finished"]) << "\n";
+  std::cout << "time.sender_transform_ms="
+            << elapsedMs(timer["Sender base OT finished"],
+                         timer["Sender set transformed"]) << "\n";
+  std::cout << "time.sender_matrix_ms="
+            << elapsedMs(timer["Sender set transformed"],
+                         timer["Sender transposed hash input computed"]) << "\n";
+  std::cout << "time.sender_hash_send_ms="
+            << elapsedMs(timer["Sender transposed hash input computed"],
+                         timer["Sender hash outputs computed and sent"]) << "\n";
+  std::cout << "time.sender_total_ms="
+            << elapsedMs(timer["Sender start"],
+                         timer["Sender hash outputs computed and sent"]) << "\n";
 
 }
 

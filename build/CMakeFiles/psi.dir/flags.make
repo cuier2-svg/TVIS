@@ -6,5 +6,7 @@ CXX_DEFINES = -DPSI_ENABLE_BATCHPIR=1
 
 CXX_INCLUDES = -I/Users/cuiyang/upsi-main-2/cuckoofilter -I/Users/cuiyang/upsi-main-2/third_party/vectorized_batchpir -I/Users/cuiyang/upsi-main-2/third_party/vectorized_batchpir/header -isystem /opt/homebrew/include -isystem /opt/homebrew/opt/boost@1.85/include -isystem /opt/homebrew/include/SEAL-4.3
 
-CXX_FLAGS = -g -std=gnu++20 -Wall -g -ggdb -O0 -march=native+crypto -Wno-error=switch
+CXX_FLAGSarm64 = -g -std=gnu++20 -arch arm64 -Wall -g -ggdb -O0 -march=native+crypto -Wno-error=switch
+
+CXX_FLAGS = -g -std=gnu++20 -arch arm64 -Wall -g -ggdb -O0 -march=native+crypto -Wno-error=switch
 
