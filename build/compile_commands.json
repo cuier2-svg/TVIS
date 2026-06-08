@@ -1,67 +1,67 @@
 [
 {
   "directory": "/Users/cuiyang/upsi-main-2/build",
-  "command": "/usr/bin/c++  -I/Users/cuiyang/upsi-main-2/BatchPIR -I/Users/cuiyang/upsi-main-2/BatchPIR/header -isystem /opt/homebrew/include -isystem /opt/homebrew/include/SEAL-4.3 -g -std=gnu++20 -Wall -g -ggdb -O0 -o CMakeFiles/BatchPIR.dir/BatchPIR/src/batchpirclient.cpp.o -c /Users/cuiyang/upsi-main-2/BatchPIR/src/batchpirclient.cpp",
+  "command": "/usr/bin/c++  -I/Users/cuiyang/upsi-main-2/BatchPIR -I/Users/cuiyang/upsi-main-2/BatchPIR/header -isystem /opt/homebrew/include -isystem /opt/homebrew/include/SEAL-4.3 -g -std=gnu++20 -arch arm64 -Wall -g -ggdb -O0 -o CMakeFiles/BatchPIR.dir/BatchPIR/src/batchpirclient.cpp.o -c /Users/cuiyang/upsi-main-2/BatchPIR/src/batchpirclient.cpp",
   "file": "/Users/cuiyang/upsi-main-2/BatchPIR/src/batchpirclient.cpp",
   "output": "CMakeFiles/BatchPIR.dir/BatchPIR/src/batchpirclient.cpp.o"
 },
 {
   "directory": "/Users/cuiyang/upsi-main-2/build",
-  "command": "/usr/bin/c++  -I/Users/cuiyang/upsi-main-2/BatchPIR -I/Users/cuiyang/upsi-main-2/BatchPIR/header -isystem /opt/homebrew/include -isystem /opt/homebrew/include/SEAL-4.3 -g -std=gnu++20 -Wall -g -ggdb -O0 -o CMakeFiles/BatchPIR.dir/BatchPIR/src/batchpirparams.cpp.o -c /Users/cuiyang/upsi-main-2/BatchPIR/src/batchpirparams.cpp",
+  "command": "/usr/bin/c++  -I/Users/cuiyang/upsi-main-2/BatchPIR -I/Users/cuiyang/upsi-main-2/BatchPIR/header -isystem /opt/homebrew/include -isystem /opt/homebrew/include/SEAL-4.3 -g -std=gnu++20 -arch arm64 -Wall -g -ggdb -O0 -o CMakeFiles/BatchPIR.dir/BatchPIR/src/batchpirparams.cpp.o -c /Users/cuiyang/upsi-main-2/BatchPIR/src/batchpirparams.cpp",
   "file": "/Users/cuiyang/upsi-main-2/BatchPIR/src/batchpirparams.cpp",
   "output": "CMakeFiles/BatchPIR.dir/BatchPIR/src/batchpirparams.cpp.o"
 },
 {
   "directory": "/Users/cuiyang/upsi-main-2/build",
-  "command": "/usr/bin/c++  -I/Users/cuiyang/upsi-main-2/BatchPIR -I/Users/cuiyang/upsi-main-2/BatchPIR/header -isystem /opt/homebrew/include -isystem /opt/homebrew/include/SEAL-4.3 -g -std=gnu++20 -Wall -g -ggdb -O0 -o CMakeFiles/BatchPIR.dir/BatchPIR/src/batchpirserver.cpp.o -c /Users/cuiyang/upsi-main-2/BatchPIR/src/batchpirserver.cpp",
+  "command": "/usr/bin/c++  -I/Users/cuiyang/upsi-main-2/BatchPIR -I/Users/cuiyang/upsi-main-2/BatchPIR/header -isystem /opt/homebrew/include -isystem /opt/homebrew/include/SEAL-4.3 -g -std=gnu++20 -arch arm64 -Wall -g -ggdb -O0 -o CMakeFiles/BatchPIR.dir/BatchPIR/src/batchpirserver.cpp.o -c /Users/cuiyang/upsi-main-2/BatchPIR/src/batchpirserver.cpp",
   "file": "/Users/cuiyang/upsi-main-2/BatchPIR/src/batchpirserver.cpp",
   "output": "CMakeFiles/BatchPIR.dir/BatchPIR/src/batchpirserver.cpp.o"
 },
 {
   "directory": "/Users/cuiyang/upsi-main-2/build",
-  "command": "/usr/bin/c++  -I/Users/cuiyang/upsi-main-2/BatchPIR -I/Users/cuiyang/upsi-main-2/BatchPIR/header -isystem /opt/homebrew/include -isystem /opt/homebrew/include/SEAL-4.3 -g -std=gnu++20 -Wall -g -ggdb -O0 -o CMakeFiles/BatchPIR.dir/BatchPIR/src/client.cpp.o -c /Users/cuiyang/upsi-main-2/BatchPIR/src/client.cpp",
+  "command": "/usr/bin/c++  -I/Users/cuiyang/upsi-main-2/BatchPIR -I/Users/cuiyang/upsi-main-2/BatchPIR/header -isystem /opt/homebrew/include -isystem /opt/homebrew/include/SEAL-4.3 -g -std=gnu++20 -arch arm64 -Wall -g -ggdb -O0 -o CMakeFiles/BatchPIR.dir/BatchPIR/src/client.cpp.o -c /Users/cuiyang/upsi-main-2/BatchPIR/src/client.cpp",
   "file": "/Users/cuiyang/upsi-main-2/BatchPIR/src/client.cpp",
   "output": "CMakeFiles/BatchPIR.dir/BatchPIR/src/client.cpp.o"
 },
 {
   "directory": "/Users/cuiyang/upsi-main-2/build",
-  "command": "/usr/bin/c++  -I/Users/cuiyang/upsi-main-2/BatchPIR -I/Users/cuiyang/upsi-main-2/BatchPIR/header -isystem /opt/homebrew/include -isystem /opt/homebrew/include/SEAL-4.3 -g -std=gnu++20 -Wall -g -ggdb -O0 -o CMakeFiles/BatchPIR.dir/BatchPIR/src/pirparams.cpp.o -c /Users/cuiyang/upsi-main-2/BatchPIR/src/pirparams.cpp",
+  "command": "/usr/bin/c++  -I/Users/cuiyang/upsi-main-2/BatchPIR -I/Users/cuiyang/upsi-main-2/BatchPIR/header -isystem /opt/homebrew/include -isystem /opt/homebrew/include/SEAL-4.3 -g -std=gnu++20 -arch arm64 -Wall -g -ggdb -O0 -o CMakeFiles/BatchPIR.dir/BatchPIR/src/pirparams.cpp.o -c /Users/cuiyang/upsi-main-2/BatchPIR/src/pirparams.cpp",
   "file": "/Users/cuiyang/upsi-main-2/BatchPIR/src/pirparams.cpp",
   "output": "CMakeFiles/BatchPIR.dir/BatchPIR/src/pirparams.cpp.o"
 },
 {
   "directory": "/Users/cuiyang/upsi-main-2/build",
-  "command": "/usr/bin/c++  -I/Users/cuiyang/upsi-main-2/BatchPIR -I/Users/cuiyang/upsi-main-2/BatchPIR/header -isystem /opt/homebrew/include -isystem /opt/homebrew/include/SEAL-4.3 -g -std=gnu++20 -Wall -g -ggdb -O0 -o CMakeFiles/BatchPIR.dir/BatchPIR/src/server.cpp.o -c /Users/cuiyang/upsi-main-2/BatchPIR/src/server.cpp",
+  "command": "/usr/bin/c++  -I/Users/cuiyang/upsi-main-2/BatchPIR -I/Users/cuiyang/upsi-main-2/BatchPIR/header -isystem /opt/homebrew/include -isystem /opt/homebrew/include/SEAL-4.3 -g -std=gnu++20 -arch arm64 -Wall -g -ggdb -O0 -o CMakeFiles/BatchPIR.dir/BatchPIR/src/server.cpp.o -c /Users/cuiyang/upsi-main-2/BatchPIR/src/server.cpp",
   "file": "/Users/cuiyang/upsi-main-2/BatchPIR/src/server.cpp",
   "output": "CMakeFiles/BatchPIR.dir/BatchPIR/src/server.cpp.o"
 },
 {
   "directory": "/Users/cuiyang/upsi-main-2/build",
-  "command": "/usr/bin/c++ -DPSI_ENABLE_BATCHPIR=1 -I/Users/cuiyang/upsi-main-2/cuckoofilter -I/Users/cuiyang/upsi-main-2/BatchPIR -I/Users/cuiyang/upsi-main-2/BatchPIR/header -isystem /opt/homebrew/include -isystem /opt/homebrew/opt/boost@1.85/include -isystem /opt/homebrew/include/SEAL-4.3 -g -std=gnu++20 -Wall -g -ggdb -O0 -march=native+crypto -Wno-error=switch -o CMakeFiles/psi.dir/src/main.cpp.o -c /Users/cuiyang/upsi-main-2/src/main.cpp",
+  "command": "/usr/bin/c++ -DPSI_ENABLE_BATCHPIR=1 -I/Users/cuiyang/upsi-main-2/cuckoofilter -I/Users/cuiyang/upsi-main-2/BatchPIR -I/Users/cuiyang/upsi-main-2/BatchPIR/header -isystem /opt/homebrew/include -isystem /opt/homebrew/opt/boost@1.85/include -isystem /opt/homebrew/include/SEAL-4.3 -g -std=gnu++20 -arch arm64 -Wall -g -ggdb -O0 -march=native+crypto -Wno-error=switch -o CMakeFiles/psi.dir/src/main.cpp.o -c /Users/cuiyang/upsi-main-2/src/main.cpp",
   "file": "/Users/cuiyang/upsi-main-2/src/main.cpp",
   "output": "CMakeFiles/psi.dir/src/main.cpp.o"
 },
 {
   "directory": "/Users/cuiyang/upsi-main-2/build",
-  "command": "/usr/bin/c++ -DPSI_ENABLE_BATCHPIR=1 -I/Users/cuiyang/upsi-main-2/cuckoofilter -I/Users/cuiyang/upsi-main-2/BatchPIR -I/Users/cuiyang/upsi-main-2/BatchPIR/header -isystem /opt/homebrew/include -isystem /opt/homebrew/opt/boost@1.85/include -isystem /opt/homebrew/include/SEAL-4.3 -g -std=gnu++20 -Wall -g -ggdb -O0 -march=native+crypto -Wno-error=switch -o CMakeFiles/psi.dir/src/vole/receiver.cpp.o -c /Users/cuiyang/upsi-main-2/src/vole/receiver.cpp",
+  "command": "/usr/bin/c++ -DPSI_ENABLE_BATCHPIR=1 -I/Users/cuiyang/upsi-main-2/cuckoofilter -I/Users/cuiyang/upsi-main-2/BatchPIR -I/Users/cuiyang/upsi-main-2/BatchPIR/header -isystem /opt/homebrew/include -isystem /opt/homebrew/opt/boost@1.85/include -isystem /opt/homebrew/include/SEAL-4.3 -g -std=gnu++20 -arch arm64 -Wall -g -ggdb -O0 -march=native+crypto -Wno-error=switch -o CMakeFiles/psi.dir/src/vole/receiver.cpp.o -c /Users/cuiyang/upsi-main-2/src/vole/receiver.cpp",
   "file": "/Users/cuiyang/upsi-main-2/src/vole/receiver.cpp",
   "output": "CMakeFiles/psi.dir/src/vole/receiver.cpp.o"
 },
 {
   "directory": "/Users/cuiyang/upsi-main-2/build",
-  "command": "/usr/bin/c++ -DPSI_ENABLE_BATCHPIR=1 -I/Users/cuiyang/upsi-main-2/cuckoofilter -I/Users/cuiyang/upsi-main-2/BatchPIR -I/Users/cuiyang/upsi-main-2/BatchPIR/header -isystem /opt/homebrew/include -isystem /opt/homebrew/opt/boost@1.85/include -isystem /opt/homebrew/include/SEAL-4.3 -g -std=gnu++20 -Wall -g -ggdb -O0 -march=native+crypto -Wno-error=switch -o CMakeFiles/psi.dir/src/vole/sender.cpp.o -c /Users/cuiyang/upsi-main-2/src/vole/sender.cpp",
+  "command": "/usr/bin/c++ -DPSI_ENABLE_BATCHPIR=1 -I/Users/cuiyang/upsi-main-2/cuckoofilter -I/Users/cuiyang/upsi-main-2/BatchPIR -I/Users/cuiyang/upsi-main-2/BatchPIR/header -isystem /opt/homebrew/include -isystem /opt/homebrew/opt/boost@1.85/include -isystem /opt/homebrew/include/SEAL-4.3 -g -std=gnu++20 -arch arm64 -Wall -g -ggdb -O0 -march=native+crypto -Wno-error=switch -o CMakeFiles/psi.dir/src/vole/sender.cpp.o -c /Users/cuiyang/upsi-main-2/src/vole/sender.cpp",
   "file": "/Users/cuiyang/upsi-main-2/src/vole/sender.cpp",
   "output": "CMakeFiles/psi.dir/src/vole/sender.cpp.o"
 },
 {
   "directory": "/Users/cuiyang/upsi-main-2/build",
-  "command": "/usr/bin/c++ -DPSI_ENABLE_BATCHPIR=1 -I/Users/cuiyang/upsi-main-2/cuckoofilter -I/Users/cuiyang/upsi-main-2/BatchPIR -I/Users/cuiyang/upsi-main-2/BatchPIR/header -isystem /opt/homebrew/include -isystem /opt/homebrew/opt/boost@1.85/include -isystem /opt/homebrew/include/SEAL-4.3 -g -std=gnu++20 -Wall -g -ggdb -O0 -march=native+crypto -Wno-error=switch -o CMakeFiles/psi.dir/src/vole/vole.cpp.o -c /Users/cuiyang/upsi-main-2/src/vole/vole.cpp",
+  "command": "/usr/bin/c++ -DPSI_ENABLE_BATCHPIR=1 -I/Users/cuiyang/upsi-main-2/cuckoofilter -I/Users/cuiyang/upsi-main-2/BatchPIR -I/Users/cuiyang/upsi-main-2/BatchPIR/header -isystem /opt/homebrew/include -isystem /opt/homebrew/opt/boost@1.85/include -isystem /opt/homebrew/include/SEAL-4.3 -g -std=gnu++20 -arch arm64 -Wall -g -ggdb -O0 -march=native+crypto -Wno-error=switch -o CMakeFiles/psi.dir/src/vole/vole.cpp.o -c /Users/cuiyang/upsi-main-2/src/vole/vole.cpp",
   "file": "/Users/cuiyang/upsi-main-2/src/vole/vole.cpp",
   "output": "CMakeFiles/psi.dir/src/vole/vole.cpp.o"
 },
 {
   "directory": "/Users/cuiyang/upsi-main-2/build",
-  "command": "/usr/bin/c++ -DPSI_ENABLE_BATCHPIR=1 -I/Users/cuiyang/upsi-main-2/cuckoofilter -I/Users/cuiyang/upsi-main-2/BatchPIR -I/Users/cuiyang/upsi-main-2/BatchPIR/header -isystem /opt/homebrew/include -isystem /opt/homebrew/opt/boost@1.85/include -isystem /opt/homebrew/include/SEAL-4.3 -g -std=gnu++20 -Wall -g -ggdb -O0 -march=native+crypto -Wno-error=switch -o CMakeFiles/psi.dir/src/vole/volePSI/SimpleIndex.cpp.o -c /Users/cuiyang/upsi-main-2/src/vole/volePSI/SimpleIndex.cpp",
+  "command": "/usr/bin/c++ -DPSI_ENABLE_BATCHPIR=1 -I/Users/cuiyang/upsi-main-2/cuckoofilter -I/Users/cuiyang/upsi-main-2/BatchPIR -I/Users/cuiyang/upsi-main-2/BatchPIR/header -isystem /opt/homebrew/include -isystem /opt/homebrew/opt/boost@1.85/include -isystem /opt/homebrew/include/SEAL-4.3 -g -std=gnu++20 -arch arm64 -Wall -g -ggdb -O0 -march=native+crypto -Wno-error=switch -o CMakeFiles/psi.dir/src/vole/volePSI/SimpleIndex.cpp.o -c /Users/cuiyang/upsi-main-2/src/vole/volePSI/SimpleIndex.cpp",
   "file": "/Users/cuiyang/upsi-main-2/src/vole/volePSI/SimpleIndex.cpp",
   "output": "CMakeFiles/psi.dir/src/vole/volePSI/SimpleIndex.cpp.o"
 }

@@ -17,7 +17,7 @@ namespace vole {
     u64 receiverSize;
     string ip;
 
-    cmd.setDefault("ss", 18);
+    cmd.setDefault("ss", 20);
     senderSize = cmd.get<u64>("ss");
     if (senderSize <= 32) {
       senderSize = 1 << senderSize;
