@@ -33,6 +33,7 @@ namespace vole {
 #ifdef PSI_ENABLE_BATCHPIR
   namespace {
     constexpr size_t kCfBucketEntrySize = CuckooFilter::TagsPerBucket() * sizeof(u32);
+    constexpr size_t kCfBatchPirPolyModulusDegree = 8192;
 
     vector<u8> saveSealObject(const auto &value) {
       stringstream stream(ios::in | ios::out | ios::binary);
@@ -75,28 +76,28 @@ namespace vole {
       return galoisBytes.size() + relinBytes.size() + 2 * sizeof(u64);
     }
 
-    size_t estimateBatchPirDim(u64 cfBuckets, u64 queryBuckets) {
-      const auto internalBuckets = static_cast<size_t>(ceil(queryBuckets * 1.2));
-      const auto averageBucketSize =
-          ceil((cfBuckets * 3.0) / static_cast<double>(internalBuckets));
-      return utils::next_power_of_two(static_cast<size_t>(ceil(cbrt(averageBucketSize))));
+    string formatBatchPirDimensions(BatchPirParams &params) {
+      PirParams pirParams(params.get_max_bucket_size(), params.get_entry_size(), 1,
+                          params.get_seal_parameters(),
+                          params.get_first_dimension_size());
+      auto dimensions = pirParams.get_dimensions();
+      while (dimensions.size() < 3) {
+        dimensions.push_back(1);
+      }
+      stringstream stream;
+      stream << dimensions[0] << "x" << dimensions[1] << "x" << dimensions[2];
+      return stream.str();
     }
 
     seal::EncryptionParameters createCfBatchPirEncryptionParameters(u64 cfBuckets,
                                                                     u64 queryBuckets) {
-      const auto dim = estimateBatchPirDim(cfBuckets, queryBuckets);
-      const auto internalBuckets = static_cast<size_t>(ceil(queryBuckets * 1.2));
-      const size_t polyModulusDegree =
-          internalBuckets * dim <= 16384 ? 16384 : 32768;
+      (void)cfBuckets;
+      (void)queryBuckets;
+      const size_t polyModulusDegree = kCfBatchPirPolyModulusDegree;
       seal::EncryptionParameters params(seal::scheme_type::bfv);
       params.set_poly_modulus_degree(polyModulusDegree);
-      if (polyModulusDegree == 32768) {
-        params.set_coeff_modulus(
-            seal::CoeffModulus::Create(polyModulusDegree, {60, 50, 50, 50, 60}));
-      } else {
-        params.set_coeff_modulus(
-            seal::CoeffModulus::Create(polyModulusDegree, {55, 55, 48, 60}));
-      }
+      params.set_coeff_modulus(
+          seal::CoeffModulus::Create(polyModulusDegree, {55, 55, 48, 60}));
       params.set_plain_modulus(seal::PlainModulus::Batching(polyModulusDegree, 22));
       return params;
     }
@@ -382,6 +383,8 @@ namespace vole {
                   << "\n";
         std::cout << "param.batchpir_dim="
                   << params.get_first_dimension_size() << "\n";
+        std::cout << "param.batchpir_dims="
+                  << formatBatchPirDimensions(params) << "\n";
         std::cout << "param.batchpir_poly_degree="
                   << encryptionParams.poly_modulus_degree() << "\n";
 #else

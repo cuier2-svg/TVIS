@@ -1,4 +1,7 @@
 #include "vole/vole.hpp"
+
+using namespace std;
+
 void testCuckoo() {
   u64 ns = 1 << 20;
   vector<block> elements(ns);

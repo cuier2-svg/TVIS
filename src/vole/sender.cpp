@@ -31,6 +31,7 @@ namespace vole {
 #ifdef PSI_ENABLE_BATCHPIR
   namespace {
     constexpr size_t kCfBucketEntrySize = CuckooFilter::TagsPerBucket() * sizeof(u32);
+    constexpr size_t kCfBatchPirPolyModulusDegree = 8192;
 
     template <typename T>
     T loadSealObject(const seal::SEALContext &context, const vector<u8> &bytes) {
@@ -65,28 +66,15 @@ namespace vole {
       }
     }
 
-    size_t estimateBatchPirDim(u64 cfBuckets, u64 queryBuckets) {
-      const auto internalBuckets = static_cast<size_t>(ceil(queryBuckets * 1.2));
-      const auto averageBucketSize =
-          ceil((cfBuckets * 3.0) / static_cast<double>(internalBuckets));
-      return utils::next_power_of_two(static_cast<size_t>(ceil(cbrt(averageBucketSize))));
-    }
-
     seal::EncryptionParameters createCfBatchPirEncryptionParameters(u64 cfBuckets,
                                                                     u64 queryBuckets) {
-      const auto dim = estimateBatchPirDim(cfBuckets, queryBuckets);
-      const auto internalBuckets = static_cast<size_t>(ceil(queryBuckets * 1.2));
-      const size_t polyModulusDegree =
-          internalBuckets * dim <= 16384 ? 16384 : 32768;
+      (void)cfBuckets;
+      (void)queryBuckets;
+      const size_t polyModulusDegree = kCfBatchPirPolyModulusDegree;
       seal::EncryptionParameters params(seal::scheme_type::bfv);
       params.set_poly_modulus_degree(polyModulusDegree);
-      if (polyModulusDegree == 32768) {
-        params.set_coeff_modulus(
-            seal::CoeffModulus::Create(polyModulusDegree, {60, 50, 50, 50, 60}));
-      } else {
-        params.set_coeff_modulus(
-            seal::CoeffModulus::Create(polyModulusDegree, {55, 55, 48, 60}));
-      }
+      params.set_coeff_modulus(
+          seal::CoeffModulus::Create(polyModulusDegree, {55, 55, 48, 60}));
       params.set_plain_modulus(seal::PlainModulus::Batching(polyModulusDegree, 22));
       return params;
     }
