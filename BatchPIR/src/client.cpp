@@ -1,6 +1,17 @@
 #include "client.h"
 
+#include <sstream>
+
 namespace {
+template <typename T>
+std::vector<unsigned char> save_serializable(const T &value)
+{
+    std::stringstream stream(std::ios::in | std::ios::out | std::ios::binary);
+    value.save(stream);
+    auto data = stream.str();
+    return std::vector<unsigned char>(data.begin(), data.end());
+}
+
 std::vector<int> required_galois_steps(const PirParams &pir_params)
 {
     std::vector<int> steps;
@@ -446,6 +457,42 @@ PIRQuery Client::gen_query(vector<uint64_t> indices)
     return merge_pir_queries(plain_queries);
 }
 
+SerializedPIRQuery Client::gen_query_serialized(vector<uint64_t> indices)
+{
+
+    if (indices.size() != num_databases_)
+    {
+        throw std::runtime_error("Error: size of indices should be equal to num_databases_");
+    }
+    const auto pir_dimensions = pir_params_.get_dimensions();
+    vector<PirDB> plain_queries(indices.size());
+    entry_slot_list_.resize(num_databases_);
+
+    for (size_t i = 0; i < indices.size(); i++)
+    {
+        PirDB plain_query(pir_dimensions.size(), std::vector<uint64_t>(polynomial_degree_, 0ULL));
+        uint64_t current_slot = 0;
+
+        if (indices[i] != pir_params_.get_default_value())
+        {
+            auto slot_positions = compute_indices(indices[i]);
+            for (size_t j = 0; j < pir_dimensions.size(); j++)
+            {
+                auto slot_pos = slot_positions[j];
+                auto dim_size = pir_dimensions[0];
+                const uint64_t rotated_slot = (current_slot + slot_pos) % dim_size;
+                plain_query[j][(rotated_slot * gap_) % row_size_] = 1;
+                current_slot = (current_slot + slot_pos) % dim_size;
+            }
+        }
+
+        entry_slot_list_[i] = current_slot;
+        plain_queries[i] = plain_query;
+    }
+
+    return merge_pir_queries_serialized(plain_queries);
+}
+
 PIRQuery Client::merge_pir_queries(vector<PirDB> plain_queries)
 {
     const auto pir_dimensions = pir_params_.get_dimensions();
@@ -479,6 +526,40 @@ PIRQuery Client::merge_pir_queries(vector<PirDB> plain_queries)
         batch_encoder_->encode(merged_plain_query[j], pt);
         encryptor_->encrypt_symmetric(pt, ct);
         merged_query.push_back(ct);
+    }
+
+    return merged_query;
+}
+
+SerializedPIRQuery Client::merge_pir_queries_serialized(vector<PirDB> plain_queries)
+{
+    const auto pir_dimensions = pir_params_.get_dimensions();
+
+    SerializedPIRQuery merged_query;
+
+    seal::Plaintext pt;
+    PirDB merged_plain_query(pir_dimensions.size(), std::vector<uint64_t>(polynomial_degree_, 0ULL));
+
+    for (int j = 0; j < pir_dimensions.size(); j++)
+    {
+        for (int i = 0; i < plain_queries.size(); i++)
+        {
+            auto rotate_amount = i;
+            if (i >= gap_)
+            {
+                plain_queries[i][j] = utils::rotate_vector_col(plain_queries[i][j]);
+                rotate_amount = rotate_amount - gap_;
+            }
+            auto rotated = utils::rotate_vector_row(plain_queries[i][j], rotate_amount);
+
+            for (int k = 0; k < polynomial_degree_; k++)
+            {
+                merged_plain_query[j][k] = merged_plain_query[j][k] + rotated[k];
+            }
+        }
+
+        batch_encoder_->encode(merged_plain_query[j], pt);
+        merged_query.push_back(save_serializable(encryptor_->encrypt_symmetric(pt)));
     }
 
     return merged_query;

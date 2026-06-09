@@ -18,6 +18,7 @@ public:
     std::pair<seal::GaloisKeys, seal::RelinKeys> get_public_keys();
     PIRQuery gen_query(uint64_t index);
     PIRQuery gen_query(vector<uint64_t> indices);
+    SerializedPIRQuery gen_query_serialized(vector<uint64_t> indices);
     seal::KeyGenerator* get_keygen();
     vector<uint64_t> get_entry_list();
     std::vector<unsigned char> decode_response(PIRResponseList response);
@@ -51,8 +52,8 @@ private:
     std::vector<size_t> compute_indices(uint64_t desired_index);
     std::vector<unsigned char> convert_to_rawdb_entry(std::vector<uint64_t>  input_list);
     PIRQuery merge_pir_queries(vector<PirDB> plain_queries);
+    SerializedPIRQuery merge_pir_queries_serialized(vector<PirDB> plain_queries);
     void check_noise_budget(const seal::Ciphertext& response); 
 };
 
 #endif // CLIENT_H
-

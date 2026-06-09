@@ -12,6 +12,7 @@
 
 
 typedef  std::vector<seal::Ciphertext> PIRQuery;
+typedef  std::vector<std::vector<unsigned char>> SerializedPIRQuery;
 typedef  seal::Ciphertext PIRResponse;
 typedef  std::vector<seal::Ciphertext> PIRResponseList;
 typedef  std::vector<std::vector<unsigned char>>  RawDB;

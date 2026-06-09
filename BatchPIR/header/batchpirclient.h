@@ -13,6 +13,7 @@ public:
     BatchPIRClient(const BatchPirParams& params);
     void set_map(std::unordered_map<std::string, uint64_t> map);
     vector<PIRQuery> create_queries(vector<uint64_t> batch);
+    vector<SerializedPIRQuery> create_serialized_queries(vector<uint64_t> batch);
     vector<RawResponses> decode_responses(vector<PIRResponseList> responses);
     vector<RawResponses> decode_responses_chunks(PIRResponseList responses);
 

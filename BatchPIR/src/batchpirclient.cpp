@@ -66,6 +66,33 @@ vector<PIRQuery> BatchPIRClient::create_queries(vector<uint64_t> batch)
     return queries;
 }
 
+vector<SerializedPIRQuery> BatchPIRClient::create_serialized_queries(vector<uint64_t> batch)
+{
+
+    if (batch.size() != batchpir_params_.get_batch_size())
+        throw std::runtime_error("Error: batch is not selected size");
+
+    cuckoo_hash(batch);
+    vector<SerializedPIRQuery> queries;
+
+    size_t dim_size = batchpir_params_.get_first_dimension_size();
+    auto max_slots = batchpir_params_.get_seal_parameters().poly_modulus_degree();
+    auto num_buckets = cuckoo_table_.size();
+    size_t per_server_capacity = max_slots / dim_size;
+
+    auto previous_idx = 0;
+    for (int i = 0; i < client_list_.size(); i++)
+    {
+        const size_t offset = std::min(per_server_capacity, num_buckets - previous_idx);
+        vector<uint64_t> sub_buckets(cuckoo_table_.begin() + previous_idx, cuckoo_table_.begin() + previous_idx + offset);
+        previous_idx += offset;
+        auto query = client_list_[i].gen_query_serialized(sub_buckets);
+        queries.push_back(query);
+    }
+
+    return queries;
+}
+
 
 
 bool BatchPIRClient::cuckoo_hash(vector<uint64_t> batch)

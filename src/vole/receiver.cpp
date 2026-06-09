@@ -102,7 +102,7 @@ namespace vole {
       return params;
     }
 
-    u64 sendBatchPirQueries(Socket &ch, const vector<PIRQuery> &queries) {
+    u64 sendBatchPirQueries(Socket &ch, const vector<SerializedPIRQuery> &queries) {
       u64 bytesSent = sizeof(u64);
       u64 queryCount = queries.size();
       macoro::sync_wait(ch.send(queryCount));
@@ -110,8 +110,7 @@ namespace vole {
         u64 ciphertextCount = query.size();
         macoro::sync_wait(ch.send(ciphertextCount));
         bytesSent += sizeof(u64);
-        for (const auto &ciphertext : query) {
-          auto bytes = saveSealObject(ciphertext);
+        for (const auto &bytes : query) {
           bytesSent += bytes.size() + sizeof(u64);
           sendBytes(ch, bytes);
         }
@@ -313,7 +312,7 @@ namespace vole {
         BatchPIRClient client(params);
         auto queryCipherStart = ch.bytesSent() + ch.bytesReceived();
         auto stepStart = std::chrono::high_resolution_clock::now();
-        auto queriesForPir = client.create_queries(bucketIds);
+        auto queriesForPir = client.create_serialized_queries(bucketIds);
         receiverBatchPirQueryMs =
             printElapsed("time.receiver_batchpir_query_ms", stepStart);
         keyBytes = sendKeys(ch, client.get_public_keys());
