@@ -150,7 +150,7 @@ namespace vole {
 
     runSender(PRNG(sysRandomSeed()), ch, senderSet);
 
-    macoro::sync_wait(ch.flush());
+    macoro::sync_wait(ch.close());
   }
 
   void VOLE::runSender(PRNG prng, Socket ch, const std::vector<block> &senderSet) {
@@ -238,7 +238,9 @@ namespace vole {
                             kCfBucketEntrySize, encryptionParams);
 
       auto bpStart = std::chrono::high_resolution_clock::now();
-      BatchPIRServer server(params, makeCfRawDb(cf));
+      // The BatchPIR server teardown path aborts in this benchmark after all
+      // protocol data has been sent. Keep it alive until process exit.
+      auto server = new BatchPIRServer(params, makeCfRawDb(cf));
       senderBatchPirServerPrepMs =
           printElapsed("time.sender_batchpir_server_prep_ms", bpStart);
       std::cout << "param.batchpir_poly_degree="
@@ -250,9 +252,9 @@ namespace vole {
       auto queries = recvBatchPirQueries(ch, context);
       senderBatchPirRecvQueriesMs =
           printElapsed("time.sender_batchpir_recv_queries_ms", stepStart);
-      server.set_client_keys(0, keys);
+      server->set_client_keys(0, keys);
       stepStart = std::chrono::high_resolution_clock::now();
-      auto responses = server.generate_response(0, queries);
+      auto responses = server->generate_response(0, queries);
       senderBatchPirResponseMs =
           printElapsed("time.sender_batchpir_response_ms", stepStart);
       stepStart = std::chrono::high_resolution_clock::now();

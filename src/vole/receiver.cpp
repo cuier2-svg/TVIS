@@ -168,7 +168,7 @@ namespace vole {
 
     runReceiver(PRNG(sysRandomSeed()), ch, receiverSet);
 
-    macoro::sync_wait(ch.flush());
+    macoro::sync_wait(ch.close());
   }
 
   void VOLE::runReceiver(osuCrypto::PRNG prng, osuCrypto::Socket ch, const std::vector<block> &receiverSet) {

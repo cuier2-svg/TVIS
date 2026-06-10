@@ -2,6 +2,7 @@
 
 #include <cryptoTools/Common/CLP.h>
 #include <cryptoTools/Common/Log.h>
+#include <exception>
 
 using namespace std;
 
@@ -72,14 +73,44 @@ namespace vole {
       } else if (cmd.get<u64>("r") == 1) {
         psi.runReceiver();
       } else if (cmd.get<u64>("r") == 2) {
+        std::exception_ptr senderException;
+        std::exception_ptr receiverException;
         thread t0 = thread([&] {
-          psi.runSender();
+          try {
+            psi.runSender();
+          } catch (...) {
+            senderException = std::current_exception();
+          }
         });
         thread t1 = thread([&] {
-          psi.runReceiver();
+          try {
+            psi.runReceiver();
+          } catch (...) {
+            receiverException = std::current_exception();
+          }
         });
         t0.join();
         t1.join();
+
+        auto reportException = [](const char *role, std::exception_ptr eptr) {
+          if (!eptr) {
+            return false;
+          }
+          try {
+            std::rethrow_exception(eptr);
+          } catch (const std::exception &e) {
+            std::cerr << "error." << role << "=" << e.what() << "\n";
+          } catch (...) {
+            std::cerr << "error." << role << "=unknown exception\n";
+          }
+          return true;
+        };
+
+        bool failed = reportException("sender", senderException);
+        failed = reportException("receiver", receiverException) || failed;
+        if (failed) {
+          return 1;
+        }
       }
     }
 
