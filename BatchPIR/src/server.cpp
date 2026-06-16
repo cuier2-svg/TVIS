@@ -372,8 +372,6 @@ void Server::transform_into_pir_db()
 PIRResponseList Server::merge_responses_chunks_buckets(vector<PIRResponseList> &responses, uint32_t client_id)
 {
     const size_t num_slots_per_entry = pir_params_.get_num_slots_per_entry();
-    const size_t num_slots_per_entry_rounded = utils::next_power_of_two(num_slots_per_entry);
-
     const size_t max_empty_slots = pir_params_.get_dimensions()[0];
     auto num_chunk_ctx = ceil(num_slots_per_entry * 1.0 / max_empty_slots);
 
@@ -402,68 +400,8 @@ PIRResponseList Server::merge_responses_chunks_buckets(vector<PIRResponseList> &
         }
     }
 
-    
-    auto current_fill = gap_ * num_slots_per_entry;
-    size_t num_buckets_merged = (row_size_ / current_fill);
-
-
-    // for now if chunks are in multiple ciphertexts then return
-    // if remaining
-    if (ceil(num_slots_per_entry * 1.0 / max_empty_slots) > 1 || num_buckets_merged <= 1 || chunk_response.size() == 1 )
-    {
-        modulus_switch(chunk_response);
-        return chunk_response;
-    }
-
-    current_fill = gap_ * num_slots_per_entry_rounded;
-    auto merged_ctx_needed = ceil((chunk_response.size() * current_fill * 1.0) / row_size_);
-
-    PIRResponseList chunk_bucket_responses;
-    for (int i = 0; i < merged_ctx_needed; i++)
-    {
-        Ciphertext ct_acc;
-        const size_t start = i * num_buckets_merged;
-        if (start >= chunk_response.size())
-        {
-            break;
-        }
-        const size_t buckets_to_merge =
-            std::min(num_buckets_merged, chunk_response.size() - start);
-        for (size_t j = 0; j < buckets_to_merge; j++)
-        {
-            Ciphertext copy_ct_acc = chunk_response[start + j];
-            Ciphertext tmp_ct = copy_ct_acc;
-            // copy logic: copy_ct_acc will hold coppied result
-            for (size_t k = 1; k < row_size_ / current_fill; k *= 2)
-            {
-                evaluator_->rotate_rows_inplace(tmp_ct, -1 * k * current_fill, client_keys_[client_id].first);
-                evaluator_->add_inplace(copy_ct_acc, tmp_ct);
-                tmp_ct = copy_ct_acc;
-            }
-
-            // selection logic: select consecutive gap_  entries from each bucket
-            std::vector<uint64_t> selection_vector(polynomial_degree_, 0ULL);
-            std::fill_n(selection_vector.begin() + (j * current_fill), current_fill, 1ULL);
-            std::fill_n(selection_vector.begin() + row_size_ + (j * current_fill), current_fill, 1ULL);
-
-            Plaintext selection_pt;
-            batch_encoder_->encode(selection_vector, selection_pt);
-            evaluator_->multiply_plain_inplace(copy_ct_acc, selection_pt);
-            if (j == 0)
-            {
-                ct_acc = copy_ct_acc;
-            }
-            else
-            {
-                evaluator_->add_inplace(ct_acc, copy_ct_acc);
-            }
-        }
-        chunk_bucket_responses.push_back(ct_acc);
-    }
-
-    
-    modulus_switch(chunk_bucket_responses);
-    return chunk_bucket_responses;
+    modulus_switch(chunk_response);
+    return chunk_response;
 }
 
 void Server::modulus_switch(PIRResponseList& list){

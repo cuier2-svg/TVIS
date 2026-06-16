@@ -335,11 +335,14 @@ vector<RawDB> BatchPIRClient::decode_responses_chunks(PIRResponseList responses)
     auto current_fill = gap * num_slots_per_entry_rounded;
     size_t num_buckets_merged = (row_size / current_fill);
 
-    if (ceil(num_slots_per_entry * 1.0 / max_empty_slots) > 1 || num_buckets_merged <= 1 || client_list_.size() == 1)
+    size_t num_chunk_ctx = ceil((num_slots_per_entry * 1.0) / max_empty_slots);
+    const bool responses_are_per_client =
+        responses.size() == client_list_.size() * num_chunk_ctx;
+
+    if (ceil(num_slots_per_entry * 1.0 / max_empty_slots) > 1 ||
+        num_buckets_merged <= 1 || client_list_.size() == 1 ||
+        responses_are_per_client)
     {
-
-        size_t num_chunk_ctx = ceil((num_slots_per_entry * 1.0) / max_empty_slots);
-
         for (int i = 0; i < client_list_.size(); i++)
         {
             auto start_idx = (i * num_chunk_ctx);
