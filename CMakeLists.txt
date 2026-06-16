@@ -8,20 +8,13 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 add_compile_options(-Wall)
 #add_compile_options(-fsanitize=address)
 
-add_compile_options(-g -ggdb)
-
 # Set default build type to Release if not specified
 if (NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE Release CACHE STRING "Choose the type of build." FORCE)
 endif ()
 
-if (CMAKE_BUILD_TYPE MATCHES Debug)
-    add_compile_options(-O0)
-endif ()
-
-if (CMAKE_BUILD_TYPE MATCHES Release)
-    add_compile_options(-O2)
-endif ()
+set(CMAKE_CXX_FLAGS_DEBUG "-g -ggdb -O0" CACHE STRING "Debug compiler flags" FORCE)
+set(CMAKE_CXX_FLAGS_RELEASE "-O3 -DNDEBUG" CACHE STRING "Release compiler flags" FORCE)
 
 add_executable(psi
         src/main.cpp

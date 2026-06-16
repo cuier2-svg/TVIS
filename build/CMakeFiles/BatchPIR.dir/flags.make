@@ -6,7 +6,5 @@ CXX_DEFINES =
 
 CXX_INCLUDES = -I/Users/cuiyang/upsi-main-2/BatchPIR -I/Users/cuiyang/upsi-main-2/BatchPIR/header -isystem /opt/homebrew/include -isystem /opt/homebrew/include/SEAL-4.3
 
-CXX_FLAGSarm64 = -g -std=gnu++20 -arch arm64 -Wall -g -ggdb -O0
-
-CXX_FLAGS = -g -std=gnu++20 -arch arm64 -Wall -g -ggdb -O0
+CXX_FLAGS = -O3 -DNDEBUG -std=gnu++20 -Wall
 
