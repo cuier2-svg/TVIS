@@ -19,6 +19,4 @@ To run it:
 ./upsi -r 2
 ```
 
-## Contact
 
-Create a GitHub issue or contact `lzjluzijie@gmail.com` if you have any question.
