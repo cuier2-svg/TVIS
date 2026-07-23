@@ -19,6 +19,7 @@
 
 #include <openssl/sha.h>
 #include <string>
+#include <utility>
 
 using volePSI::Paxos;
 using volePSI::Baxos;
@@ -41,20 +42,26 @@ namespace vole {
     const bool indexedCf;
     const bool batchPirCf;
     const u64 batchPirChunkSize;
+    const u64 updateSize;
+    const std::string updateOp;
 
     VOLE(block commonSeed,
          u64 senderSize,
          u64 receiverSize,
          bool indexedCf = false,
          bool batchPirCf = false,
-         u64 batchPirChunkSize = 64
+         u64 batchPirChunkSize = 64,
+         u64 updateSize = 0,
+         std::string updateOp = "insert"
     )
         : commonSeed(commonSeed),
           senderSize(senderSize),
           receiverSize(receiverSize),
           indexedCf(indexedCf),
           batchPirCf(batchPirCf),
-          batchPirChunkSize(batchPirChunkSize) {}
+          batchPirChunkSize(batchPirChunkSize),
+          updateSize(updateSize),
+          updateOp(std::move(updateOp)) {}
 
     void runSender(PRNG prng, Socket ch, const std::vector<block> &senderSet);
     void runReceiver(PRNG prng, Socket ch, const std::vector<block> &receiverSet);

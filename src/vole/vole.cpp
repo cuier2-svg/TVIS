@@ -40,12 +40,28 @@ namespace vole {
     cmd.setDefault("bp_cf_batch", 64);
     u64 batchPirChunkSize = cmd.get<u64>("bp_cf_batch");
 
+    cmd.setDefault("us", 0);
+    u64 updateSize = cmd.get<u64>("us");
+    if (updateSize > 20000) {
+      std::cerr << "error.update_size=update set size must be <= 20000\n";
+      return 1;
+    }
+
+    cmd.setDefault("uop", "insert");
+    string updateOp = cmd.get<string>("uop");
+    if (updateOp != "insert" && updateOp != "delete") {
+      std::cerr << "error.update_op=update operation must be insert or delete\n";
+      return 1;
+    }
+
     VOLE psi(commonSeed,
              senderSize,
              receiverSize,
              indexedCf,
              batchPirCf,
-             batchPirChunkSize
+             batchPirChunkSize,
+             updateSize,
+             updateOp
              );
 
     bool noneSet = !cmd.isSet("r");
@@ -66,7 +82,9 @@ namespace vole {
           << " -rs     log(#elements) on receiver side.\n"
           << " -ip     ip address (and port).\n"
           << " -cf     full, indexed, or batchpir CF transfer.\n"
-          << " -bp_cf_batch   max CF buckets per BatchPIR query chunk.\n";
+          << " -bp_cf_batch   max CF buckets per BatchPIR query chunk.\n"
+          << " -us     update set size, literal value, max 20000.\n"
+          << " -uop    update operation: insert or delete.\n";
     } else {
       if (cmd.get<u64>("r") == 0) {
         psi.runSender();

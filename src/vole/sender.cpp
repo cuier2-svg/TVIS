@@ -1,6 +1,8 @@
 #include "vole.hpp"
 
+#include <algorithm>
 #include <array>
+#include <chrono>
 
 #ifdef PSI_ENABLE_BATCHPIR
 #include "batchpirclient.h"
@@ -169,6 +171,7 @@ namespace vole {
     delta = OneBlock;
     vector<block> okvsData(kSize);
     commonPrng.get<block>(okvsData);
+    const vector<block> cfOkvsData = okvsData;
     vector<block> decodedValues(senderSize);
     okvs.decode<block>(senderSet, decodedValues, okvsData);
 
@@ -286,6 +289,56 @@ namespace vole {
       }
       macoro::sync_wait(ch.send(bucketTags));
       std::cout << "param.cf_buckets=" << bucketIds.size() << "\n";
+    }
+
+    if (updateSize != 0) {
+      u64 updateSuccess = 0;
+      u64 updateFail = 0;
+      const auto updateStart = Clock::now();
+
+      if (updateOp == "insert") {
+        vector<block> updateSet(updateSize);
+        PRNG updatePrng(oc::toBlock(789));
+        updatePrng.get<block>(updateSet);
+
+        vector<block> updateDecodedValues(updateSize);
+        okvs.decode<block>(updateSet, updateDecodedValues, cfOkvsData);
+
+        for (u64 i = 0; i < updateSize; ++i) {
+          SHA256(updateSet[i].data(), sizeof(block), hash);
+          block b = updateDecodedValues[i] ^ (delta.gf128Mul(*pblock));
+          SHA256((u8 *) &b, sizeof(block), hash);
+          if (cf.Add((u64 *) &hash) == cuckoofilter::Status::Ok) {
+            ++updateSuccess;
+          } else {
+            ++updateFail;
+          }
+        }
+      } else {
+        const u64 deleteSize = std::min<u64>(updateSize, senderSet.size());
+        for (u64 i = 0; i < deleteSize; ++i) {
+          SHA256(senderSet[i].data(), sizeof(block), hash);
+          block b = decodedValues[i] ^ (delta.gf128Mul(*pblock));
+          SHA256((u8 *) &b, sizeof(block), hash);
+          if (cf.Delete((u64 *) &hash) == cuckoofilter::Status::Ok) {
+            ++updateSuccess;
+          } else {
+            ++updateFail;
+          }
+        }
+        updateFail += updateSize - deleteSize;
+      }
+
+      const auto updateEnd = Clock::now();
+      const auto senderCfUpdateUs =
+          std::chrono::duration_cast<std::chrono::microseconds>(
+              updateEnd - updateStart)
+              .count();
+      std::cout << "param.update_size=" << updateSize << "\n";
+      std::cout << "param.update_op=" << updateOp << "\n";
+      std::cout << "time.sender_cf_update_us=" << senderCfUpdateUs << "\n";
+      std::cout << "result.cf_update_success=" << updateSuccess << "\n";
+      std::cout << "result.cf_update_fail=" << updateFail << "\n";
     }
 
     auto senderTotalMs = senderSetupMs + senderBatchPirServerPrepMs;
