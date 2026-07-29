@@ -4,11 +4,12 @@ cmake-build-debug
 cmake-build-release
 cmake-build-default
 /build/
+/data/
 /outputs/
+/tools/
+/psi
+/run_veriwild
 
 # External dependencies
 /libOTe/
 /libOTe\ /
-
-# Generated real-dataset PSI inputs
-/data/processed/
