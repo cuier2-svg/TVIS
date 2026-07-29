@@ -122,9 +122,13 @@ cmake .. -DENABLE_BATCHPIR=OFF -DlibOTe_DIR=/path/to/lib/cmake/libOTe
 | `-r` | 无 | 运行角色：`0` 为发送方，`1` 为接收方，`2` 为本地双方模式 |
 | `-ss` | `20` | 发送方集合规模；不大于 32 时按 `2^ss` 计算 |
 | `-rs` | `8` | 接收方集合规模；不大于 32 时按 `2^rs` 计算 |
-| `-ip` | `localhost` | IP 地址和端口参数；当前协议运行代码仍固定使用 `127.0.0.1:7700` |
+| `-ip` | `127.0.0.1:7700` | 通信端点，格式为 `host:port`；发送方监听，接收方连接 |
 | `-cf` | `full` | CF 传输模式：`full`、`indexed` 或 `batchpir` |
 | `-bp_cf_batch` | `64` | 每个 BatchPIR 查询分块包含的最大 CF bucket 数量 |
+| `-sf` | 空 | 发送方集合文件；内容为连续的 16 字节元素，文件大小决定发送方集合规模 |
+| `-rf` | 空 | 接收方集合文件；内容为连续的 16 字节元素，文件大小决定接收方集合规模 |
+| `-dataset` | 空 | 输出中显示的数据集名称 |
+| `-ei` | 空 | 预期交集大小；设置后输出 `result.correct` |
 | `-us` | `0` | 更新集合大小，填写实际数量，最大值为 `20000` |
 | `-uop` | `insert` | 更新操作：`insert` 或 `delete` |
 
@@ -140,6 +144,63 @@ cmake .. -DENABLE_BATCHPIR=OFF -DlibOTe_DIR=/path/to/lib/cmake/libOTe
 ./psi -r 2 -ss 12 -rs 8 -cf full -us 100 -uop insert
 ```
 
+## VERI-Wild 真实车辆数据
+
+仓库提供 `tools/preprocess_veriwild.py`，用于从 VERI-Wild 标注文件中构造真实车辆 PSI 输入。默认实验参数为：
+
+- 服务端目标车辆：`32768`
+- 客户端通行车辆：`256`
+- 预期交集：`64`
+- 元素编码：`Trunc128(SHA256("TVIS-v1|vehicle|" || vehicle_id))`
+
+脚本默认按下面的空白分隔标注格式读取数据：
+
+```text
+image_path vehicle_id camera_id
+```
+
+如果实际标注列顺序不同，可以通过 `--vehicle-id-column` 和 `--camera-id-column` 指定从 0 开始的列号。生成数据：
+
+```shell
+python3 tools/preprocess_veriwild.py \
+  --annotations /path/to/veriwild_annotations.txt
+```
+
+如果单个训练标注中的唯一车辆数不足 `32768`，可以重复传入该参数，合并官方训练集与测试身份列表：
+
+```shell
+python3 tools/preprocess_veriwild.py \
+  --annotations /path/to/train_list_start0.txt \
+  --annotations /path/to/test_10000_id.txt \
+  --vehicle-id-column 0 \
+  --vehicle-id-path-prefix
+```
+
+VERI-Wild 的训练集第二列使用局部重编号，测试集第二列则使用原始编号，因此合并时应从第一列图片路径的目录前缀提取全局车辆 ID。上述命令会得到 `30671 + 10000 = 40671` 个不同车辆身份。
+
+如果标注不含独立的摄像头列，使用 `--camera-id-column -1`；此时脚本从全部车辆身份中构造客户端集合。
+
+默认输出：
+
+```text
+data/processed/veriwild_server.bin
+data/processed/veriwild_client.bin
+data/processed/veriwild_metadata.json
+```
+
+随后运行真实数据实验：
+
+```shell
+./psi -r 2 \
+  -sf data/processed/veriwild_server.bin \
+  -rf data/processed/veriwild_client.bin \
+  -dataset VERI-Wild \
+  -ei 64 \
+  -cf batchpir
+```
+
+`-sf` 和 `-rf` 会覆盖 `-ss` 与 `-rs`，集合规模直接由文件大小计算。数据集原始标注解析、车辆 ID 哈希和文件生成均在协议运行前完成，不计入 PSI 耗时。未指定集合文件时，程序仍使用原有的固定种子数据模式。
+
 ## 输出说明
 
 程序运行后会输出协议参数、耗时、通信量和交集大小等指标，常见字段包括：
@@ -152,9 +213,12 @@ cmake .. -DENABLE_BATCHPIR=OFF -DlibOTe_DIR=/path/to/lib/cmake/libOTe
 | `time.receiver_setup_ms` | 接收方初始化耗时（毫秒） |
 | `time.receiver_vole_ms` | 接收方 VOLE 阶段耗时（毫秒） |
 | `time.receiver_total_ms` | 接收方总耗时（毫秒） |
+| `time.end_to_end_ms` | 接收方从协议开始到得到交集结果的端到端耗时（毫秒） |
 | `comm.vole_mb` | VOLE 阶段通信量（MB） |
 | `comm.online_mb` | 在线阶段通信量（MB） |
 | `result.intersection` | 计算得到的交集元素数量 |
+| `dataset.expected_intersection` | 通过 `-ei` 设置的预期交集数量 |
+| `result.correct` | 协议交集数量是否与预期值一致 |
 
 ## BatchPIR 说明
 

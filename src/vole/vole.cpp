@@ -1,7 +1,9 @@
 #include "vole.hpp"
+#include "dataset.hpp"
 
 #include <cryptoTools/Common/CLP.h>
 #include <cryptoTools/Common/Log.h>
+#include <algorithm>
 #include <exception>
 
 using namespace std;
@@ -16,22 +18,41 @@ namespace vole {
 
     u64 senderSize;
     u64 receiverSize;
-    string ip;
 
     cmd.setDefault("ss", 20);
     senderSize = cmd.get<u64>("ss");
     if (senderSize <= 32) {
-      senderSize = 1 << senderSize;
+      senderSize = u64{1} << senderSize;
     }
 
     cmd.setDefault("rs", 8);
     receiverSize = cmd.get<u64>("rs");
     if (receiverSize <= 32) {
-      receiverSize = 1 << receiverSize;
+      receiverSize = u64{1} << receiverSize;
     }
 
-    cmd.setDefault("ip", "localhost");
-    ip = cmd.get<string>("ip");
+    string senderFile = cmd.isSet("sf") ? cmd.get<string>("sf") : "";
+    string receiverFile = cmd.isSet("rf") ? cmd.get<string>("rf") : "";
+    if (!senderFile.empty()) {
+      senderSize = blockFileElementCount(senderFile);
+    }
+    if (!receiverFile.empty()) {
+      receiverSize = blockFileElementCount(receiverFile);
+    }
+
+    string datasetName =
+        cmd.isSet("dataset") ? cmd.get<string>("dataset") : "";
+    bool hasExpectedIntersection = cmd.isSet("ei");
+    u64 expectedIntersection =
+        hasExpectedIntersection ? cmd.get<u64>("ei") : 0;
+    if (hasExpectedIntersection &&
+        expectedIntersection > std::min(senderSize, receiverSize)) {
+      std::cerr << "error.expected_intersection=expected intersection exceeds a set size\n";
+      return 1;
+    }
+
+    cmd.setDefault("ip", "127.0.0.1:7700");
+    string endpoint = cmd.get<string>("ip");
 
     cmd.setDefault("cf", "full");
     auto cfMode = cmd.get<string>("cf");
@@ -61,7 +82,13 @@ namespace vole {
              batchPirCf,
              batchPirChunkSize,
              updateSize,
-             updateOp
+             updateOp,
+             endpoint,
+             senderFile,
+             receiverFile,
+             datasetName,
+             hasExpectedIntersection,
+             expectedIntersection
              );
 
     bool noneSet = !cmd.isSet("r");
@@ -80,9 +107,13 @@ namespace vole {
           << "Parameters:\n"
           << " -ss     log(#elements) on sender side.\n"
           << " -rs     log(#elements) on receiver side.\n"
-          << " -ip     ip address (and port).\n"
+          << " -ip     endpoint in host:port form.\n"
           << " -cf     full, indexed, or batchpir CF transfer.\n"
           << " -bp_cf_batch   max CF buckets per BatchPIR query chunk.\n"
+          << " -sf     sender block file; raw concatenated 16-byte elements.\n"
+          << " -rf     receiver block file; raw concatenated 16-byte elements.\n"
+          << " -dataset   dataset label printed with the results.\n"
+          << " -ei     expected intersection size for correctness reporting.\n"
           << " -us     update set size, literal value, max 20000.\n"
           << " -uop    update operation: insert or delete.\n";
     } else {

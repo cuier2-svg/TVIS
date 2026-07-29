@@ -18,6 +18,7 @@ set(CMAKE_CXX_FLAGS_RELEASE "-O3 -DNDEBUG" CACHE STRING "Release compiler flags"
 
 add_executable(psi
         src/main.cpp
+        src/vole/dataset.cpp
         src/vole/receiver.cpp
         src/vole/sender.cpp
         src/vole/vole.cpp

@@ -1,2 +1,0 @@
-/usr/bin/ar qc libBatchPIR.a CMakeFiles/BatchPIR.dir/BatchPIR/src/batchpirclient.cpp.o CMakeFiles/BatchPIR.dir/BatchPIR/src/batchpirparams.cpp.o CMakeFiles/BatchPIR.dir/BatchPIR/src/batchpirserver.cpp.o CMakeFiles/BatchPIR.dir/BatchPIR/src/client.cpp.o CMakeFiles/BatchPIR.dir/BatchPIR/src/pirparams.cpp.o CMakeFiles/BatchPIR.dir/BatchPIR/src/server.cpp.o
-/usr/bin/ranlib libBatchPIR.a

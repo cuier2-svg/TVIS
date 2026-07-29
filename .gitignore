@@ -1,8 +1,14 @@
 .idea
+.DS_Store
 cmake-build-debug
 cmake-build-release
 cmake-build-default
+/build/
+/outputs/
 
 # External dependencies
 /libOTe/
 /libOTe\ /
+
+# Generated real-dataset PSI inputs
+/data/processed/

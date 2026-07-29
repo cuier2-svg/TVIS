@@ -1,4 +1,5 @@
 #include "vole.hpp"
+#include "dataset.hpp"
 
 #include <algorithm>
 #include <array>
@@ -144,11 +145,16 @@ namespace vole {
 #endif
 
   void VOLE::runSender() {
-    auto ch = cp::asioConnect("127.0.0.1:7700", true);
+    auto ch = cp::asioConnect(endpoint, true);
 
-    vector<block> senderSet(senderSize);
-    PRNG prng(oc::toBlock(123));
-    prng.get<block>(senderSet);
+    vector<block> senderSet;
+    if (senderFile.empty()) {
+      senderSet.resize(senderSize);
+      PRNG prng(oc::toBlock(123));
+      prng.get<block>(senderSet);
+    } else {
+      senderSet = loadBlockFile(senderFile, senderSize);
+    }
 
     runSender(PRNG(sysRandomSeed()), ch, senderSet);
 

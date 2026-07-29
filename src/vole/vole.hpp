@@ -44,6 +44,12 @@ namespace vole {
     const u64 batchPirChunkSize;
     const u64 updateSize;
     const std::string updateOp;
+    const std::string endpoint;
+    const std::string senderFile;
+    const std::string receiverFile;
+    const std::string datasetName;
+    const bool hasExpectedIntersection;
+    const u64 expectedIntersection;
 
     VOLE(block commonSeed,
          u64 senderSize,
@@ -52,7 +58,13 @@ namespace vole {
          bool batchPirCf = false,
          u64 batchPirChunkSize = 64,
          u64 updateSize = 0,
-         std::string updateOp = "insert"
+         std::string updateOp = "insert",
+         std::string endpoint = "127.0.0.1:7700",
+         std::string senderFile = "",
+         std::string receiverFile = "",
+         std::string datasetName = "",
+         bool hasExpectedIntersection = false,
+         u64 expectedIntersection = 0
     )
         : commonSeed(commonSeed),
           senderSize(senderSize),
@@ -61,7 +73,13 @@ namespace vole {
           batchPirCf(batchPirCf),
           batchPirChunkSize(batchPirChunkSize),
           updateSize(updateSize),
-          updateOp(std::move(updateOp)) {}
+          updateOp(std::move(updateOp)),
+          endpoint(std::move(endpoint)),
+          senderFile(std::move(senderFile)),
+          receiverFile(std::move(receiverFile)),
+          datasetName(std::move(datasetName)),
+          hasExpectedIntersection(hasExpectedIntersection),
+          expectedIntersection(expectedIntersection) {}
 
     void runSender(PRNG prng, Socket ch, const std::vector<block> &senderSet);
     void runReceiver(PRNG prng, Socket ch, const std::vector<block> &receiverSet);

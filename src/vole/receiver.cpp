@@ -1,4 +1,5 @@
 #include "vole.hpp"
+#include "dataset.hpp"
 
 #include <algorithm>
 #include <array>
@@ -153,18 +154,23 @@ namespace vole {
 #endif
 
   void VOLE::runReceiver() {
-    auto ch = cp::asioConnect("127.0.0.1:7700", false);
+    auto ch = cp::asioConnect(endpoint, false);
 
-    vector<block> receiverSet(receiverSize);
-    PRNG prng(oc::toBlock(123));
+    vector<block> receiverSet;
+    if (receiverFile.empty()) {
+      receiverSet.resize(receiverSize);
+      PRNG prng(oc::toBlock(123));
+      PRNG prng2(oc::toBlock(456));
+      prng.get<block>(receiverSet);
 
-    PRNG prng2(oc::toBlock(456));
-    prng.get<block>(receiverSet);
-
-    receiverSet[2] = prng2.get<block>();
-    receiverSet[3] = prng2.get<block>();
-    receiverSet[5] = prng2.get<block>();
-    receiverSet[7] = prng2.get<block>();
+      for (const u64 index : {u64{2}, u64{3}, u64{5}, u64{7}}) {
+        if (index < receiverSet.size()) {
+          receiverSet[index] = prng2.get<block>();
+        }
+      }
+    } else {
+      receiverSet = loadBlockFile(receiverFile, receiverSize);
+    }
 
     runReceiver(PRNG(sysRandomSeed()), ch, receiverSet);
 
@@ -172,6 +178,8 @@ namespace vole {
   }
 
   void VOLE::runReceiver(osuCrypto::PRNG prng, osuCrypto::Socket ch, const std::vector<block> &receiverSet) {
+    const auto endToEndStart = Clock::now();
+    i64 batchPirKeySendMs = 0;
     PRNG commonPrng(commonSeed);
     vector<u128> cfParams(3);
     commonPrng.get((u8 *) cfParams.data(), cfParams.size() * sizeof(u128));
@@ -315,7 +323,9 @@ namespace vole {
         auto queriesForPir = client.create_serialized_queries(bucketIds);
         receiverBatchPirQueryMs =
             printElapsed("time.receiver_batchpir_query_ms", stepStart);
+        const auto batchPirKeySendStart = Clock::now();
         keyBytes = sendKeys(ch, client.get_public_keys());
+        batchPirKeySendMs = elapsedMs(batchPirKeySendStart);
         stepStart = std::chrono::high_resolution_clock::now();
         auto queryBytes = sendBatchPirQueries(ch, queriesForPir);
         receiverBatchPirSendQueriesMs =
@@ -436,12 +446,32 @@ namespace vole {
         senderBatchPirResponseMs + senderBatchPirSendResponsesMs +
         receiverBatchPirRecvResponsesMs + receiverBatchPirDecodeMs;
 
+    const auto rawEndToEndMs = elapsedMs(endToEndStart);
+    const auto endToEndMs = rawEndToEndMs > batchPirKeySendMs
+                                ? rawEndToEndMs - batchPirKeySendMs
+                                : 0;
+
     if (receiverSetupMs != 0) {
       std::cout << "time.receiver_setup_ms=" << receiverSetupMs << "\n";
     }
     std::cout << "time.receiver_vole_ms=" << receiverVoleMs << "\n";
     std::cout << "time.receiver_total_ms=" << receiverTotalMs << "\n";
+    std::cout << "time.end_to_end_ms=" << endToEndMs << "\n";
+    if (!datasetName.empty()) {
+      std::cout << "dataset.name=" << datasetName << "\n";
+    }
+    if (!senderFile.empty() || !receiverFile.empty()) {
+      std::cout << "dataset.server_size=" << senderSize << "\n";
+      std::cout << "dataset.client_size=" << receiverSize << "\n";
+    }
+    if (hasExpectedIntersection) {
+      std::cout << "dataset.expected_intersection=" << expectedIntersection << "\n";
+    }
     std::cout << "result.intersection=" << psi << "\n";
+    if (hasExpectedIntersection) {
+      std::cout << "result.correct="
+                << (psi == expectedIntersection ? "true" : "false") << "\n";
+    }
 
 //  Matrix<u8> matrixR(width, heightInBytes, AllocType::Uninitialized);
 //  BitVector choices(width);
