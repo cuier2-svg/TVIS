@@ -206,12 +206,15 @@ namespace vole {
     cf.SetTwoIndependentMultiplyShiftParams(cfParams);
 
     i64 receiverSetupMs = 0;
+    u64 fullCfData = 0;
     if (!indexedCf) {
       auto setupStart = Clock::now();
+      const auto fullCfStart = ch.bytesSent() + ch.bytesReceived();
       u64 cfSize;
       cp::sync_wait(ch.recv(cfSize));
       vector<u8> cfData(cfSize);
       cp::sync_wait(ch.recv(cfData));
+      fullCfData = ch.bytesSent() + ch.bytesReceived() - fullCfStart;
       cf.deserialize(cfData);
 //    cout << cf.Info() << endl;
       receiverSetupMs = elapsedMs(setupStart);
@@ -454,6 +457,10 @@ namespace vole {
     if (receiverSetupMs != 0) {
       std::cout << "time.receiver_setup_ms=" << receiverSetupMs << "\n";
     }
+    if (!indexedCf) {
+      std::cout << "comm.full_cf_mb="
+                << fullCfData / std::pow(2.0, 20) << "\n";
+    }
     std::cout << "time.receiver_vole_ms=" << receiverVoleMs << "\n";
     std::cout << "time.receiver_total_ms=" << receiverTotalMs << "\n";
     std::cout << "time.end_to_end_ms=" << endToEndMs << "\n";
@@ -509,6 +516,10 @@ namespace vole {
 //  std::cout << "Receiver sent communication: " << sentData / std::pow(2.0, 20) << " MB\n";
 //  std::cout << "Receiver received communication: " << recvData / std::pow(2.0, 20) << " MB\n";
     std::cout << "comm.online_mb=" << onlineData / std::pow(2.0, 20) << "\n";
+    if (!indexedCf) {
+      std::cout << "comm.total_mb="
+                << (onlineData + fullCfData) / std::pow(2.0, 20) << "\n";
+    }
   }
 
 }

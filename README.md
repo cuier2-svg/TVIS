@@ -7,7 +7,7 @@
 - 基于 VOLE 的 PSI 协议实现
 - 支持发送方和接收方独立运行
 - 支持单进程本地测试模式
-- 支持 `full`、`indexed` 和 `batchpir` 三种 CF 传输模式
+- 支持 `full`、 `batchpir` 两种 CF 传输模式
 - 支持集合插入、删除更新及通信量、耗时统计
 - BatchPIR 为可选功能，检测到 Microsoft SEAL 时才会启用
 
@@ -20,10 +20,11 @@
 ├── src/
 │   ├── main.cpp            # 程序入口
 │   └── vole/               # VOLE PSI 协议实现
-└── build/                  # 默认构建目录
+├── BatchPIR                # BatchPIR协议实现
+├── cuckoofilter            # cuckoofilter协议实现
 ```
 
-libOTe 是外部依赖，不包含在本仓库中，也不会上传到 GitHub。
+需安装libOTe 
 
 ## 环境要求
 
@@ -123,7 +124,7 @@ cmake .. -DENABLE_BATCHPIR=OFF -DlibOTe_DIR=/path/to/lib/cmake/libOTe
 | `-ss` | `20` | 发送方集合规模；不大于 32 时按 `2^ss` 计算 |
 | `-rs` | `8` | 接收方集合规模；不大于 32 时按 `2^rs` 计算 |
 | `-ip` | `127.0.0.1:7700` | 通信端点，格式为 `host:port`；发送方监听，接收方连接 |
-| `-cf` | `full` | CF 传输模式：`full`、`indexed` 或 `batchpir` |
+| `-cf` | `full` | CF 传输模式：`full` 或 `batchpir` |
 | `-bp_cf_batch` | `64` | 每个 BatchPIR 查询分块包含的最大 CF bucket 数量 |
 | `-sf` | 空 | 发送方集合文件；内容为连续的 16 字节元素，文件大小决定发送方集合规模 |
 | `-rf` | 空 | 接收方集合文件；内容为连续的 16 字节元素，文件大小决定接收方集合规模 |
@@ -133,11 +134,6 @@ cmake .. -DENABLE_BATCHPIR=OFF -DlibOTe_DIR=/path/to/lib/cmake/libOTe
 | `-uop` | `insert` | 更新操作：`insert` 或 `delete` |
 
 例如，测试大小分别为 `2^12` 和 `2^8` 的集合：
-
-```shell
-./psi -r 2 -ss 12 -rs 8 -cf indexed
-```
-
 执行更新测试：
 
 ```shell
@@ -200,6 +196,95 @@ data/processed/veriwild_metadata.json
 ```
 
 `-sf` 和 `-rf` 会覆盖 `-ss` 与 `-rs`，集合规模直接由文件大小计算。数据集原始标注解析、车辆 ID 哈希和文件生成均在协议运行前完成，不计入 PSI 耗时。未指定集合文件时，程序仍使用原有的固定种子数据模式。
+<!-- 
+## City-scale Traffic Camera 真实车辆数据
+
+`tools/preprocess_citycam.py` 用于处理论文 [City-scale Vehicle Trajectory Data from Traffic Camera Videos](https://doi.org/10.1038/s41597-023-02589-y) 公开的轨迹 CSV。数据可从 [Figshare](https://doi.org/10.6084/m9.figshare.c.6676199.v1) 下载。
+
+推荐使用深圳 `2021-04-16` 的单日文件 [`traj_shenzhen_20210416.csv`](https://springernature.figshare.com/articles/dataset/traj_shenzhen_20210416_csvx/23282771)。本项目下载到的文件实测包含 `1,650,253` 条轨迹和 `1,122,385` 个不同车辆身份，足以构造 `2^20` 个服务端元素。公开 CSV 的主要字段为：
+
+```text
+VehicleID,TripID,Points,DepartureTime,Duration,Length
+```
+
+同一车辆一天内可能有多条轨迹，因此预处理只读取 `VehicleID`，忽略 `TripID` 和所有轨迹字段。元素编码为：
+
+```text
+Trunc128(SHA256("TVIS-v1|city-camera-trajectory|" ||
+                "Shenzhen|2021-04-16|" || VehicleID))
+```
+
+生成 `2^20` 个服务端元素、256 个客户端元素和64个交集元素：
+
+```shell
+python3 tools/preprocess_citycam.py \
+  --input /Users/cuiyang/Downloads/traj_shenzhen_20210416.csv
+```
+
+脚本也支持 `.csv.gz`，以及仅包含目标轨迹 CSV 的 `.zip`。默认输出：
+
+```text
+data/processed/citycam_server.bin
+data/processed/citycam_client.bin
+data/processed/citycam_metadata.json
+```
+
+选择过程完全确定：对编码后的真实车辆元素排序，前 `2^20` 个构成服务端；客户端包含服务端中的64个元素，以及服务端之外的192个真实车辆元素。脚本不生成模拟车辆，也不使用随机抽样。
+
+本地功能验证：
+
+```shell
+./psi -r 2 \
+  -sf data/processed/citycam_server.bin \
+  -rf data/processed/citycam_client.bin \
+  -dataset CityCam-SZ-20210416 \
+  -ei 64 \
+  -cf batchpir
+```
+
+该公开数据没有提供物理摄像头编号与车辆身份的逐条对应表。`VehicleID` 是作者根据多个交通摄像头记录聚类得到的匿名车辆编号，不是车牌。项目将其解释为城市边缘节点汇总并去重后的车辆集合，不把道路节点或推断的轨迹点伪装成原始 `camera_id`。
+
+## Waymo Motion 真实车辆轨迹数据
+
+`tools/preprocess_waymo.py` 直接流式解析 Waymo Open Motion Dataset v1.3.1
+的 Scenario TFRecord，不依赖 TensorFlow 或 Waymo Python 包。脚本只读取：
+
+```text
+Scenario.scenario_id
+Track.id
+Track.object_type == TYPE_VEHICLE
+```
+
+Waymo 的 `Track.id` 只在单个 Scenario 中唯一，因此车辆轨迹身份定义为
+`scenario_id|track_id`，再编码为16字节 PSI 元素。该身份表示一个真实场景
+窗口中的车辆轨迹，不解释为跨场景永久车辆身份。
+
+先统计已下载分片中的车辆数：
+
+```shell
+python3 tools/preprocess_waymo.py \
+  --input /Users/cuiyang/Downloads/waymo_motion/scenario/training \
+  --count-only
+```
+
+下载到足够分片后，去掉 `--count-only` 即可生成：
+
+```text
+data/processed/waymo_server.bin
+data/processed/waymo_client.bin
+data/processed/waymo_metadata.json
+```
+
+默认构造 `2^20` 个 Server 元素、256个 Client 元素和64个交集元素：
+
+```shell
+./psi -r 2 \
+  -sf data/processed/waymo_server.bin \
+  -rf data/processed/waymo_client.bin \
+  -dataset Waymo-Motion-v1.3.1 \
+  -ei 64 \
+  -cf batchpir
+```
 
 ## 输出说明
 
@@ -214,11 +299,13 @@ data/processed/veriwild_metadata.json
 | `time.receiver_vole_ms` | 接收方 VOLE 阶段耗时（毫秒） |
 | `time.receiver_total_ms` | 接收方总耗时（毫秒） |
 | `time.end_to_end_ms` | 接收方从协议开始到得到交集结果的端到端耗时（毫秒） |
+| `comm.full_cf_mb` | `-cf full` 模式发送完整序列化 Cuckoo Filter 的实际通信量（含消息封装，仅该模式输出） |
 | `comm.vole_mb` | VOLE 阶段通信量（MB） |
 | `comm.online_mb` | 在线阶段通信量（MB） |
+| `comm.total_mb` | `-cf full` 模式的总通信量，即 `comm.full_cf_mb + comm.online_mb` |
 | `result.intersection` | 计算得到的交集元素数量 |
 | `dataset.expected_intersection` | 通过 `-ei` 设置的预期交集数量 |
-| `result.correct` | 协议交集数量是否与预期值一致 |
+| `result.correct` | 协议交集数量是否与预期值一致 | -->
 
 ## BatchPIR 说明
 
