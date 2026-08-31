@@ -93,13 +93,13 @@ cmake .. -DENABLE_BATCHPIR=OFF -DlibOTe_DIR=/path/to/lib/cmake/libOTe
 在同一进程中启动发送方和接收方：
 
 ```shell
-./psi -r 2 -ss 8 -rs 4 -cf full
+./psi -r 2 -ss 20 -rs 8 -cf batchpir
 ```
 
 也可以直接运行：
 
 ```shell
-./build/psi -r 2 -ss 8 -rs 4 -cf full
+./build/psi -r 2 -ss 20 -rs 8 -cf batchpir
 ```
 
 ### 分别启动双方
@@ -108,12 +108,13 @@ cmake .. -DENABLE_BATCHPIR=OFF -DlibOTe_DIR=/path/to/lib/cmake/libOTe
 
 ```shell
 # 终端 1：发送方
-./psi -r 0 -ss 20 -rs 8 -cf full
+./psi -r 0 -ss 20 -rs 8 -cf batchpir
 
 # 终端 2：接收方
-./psi -r 1 -ss 20 -rs 8 -cf full
+./psi -r 1 -ss 20 -rs 8 -cf batchpir
 ```
-
+运行结果如下图所示：
+![alt text](https://file%2B.vscode-resource.vscode-cdn.net/var/folders/fh/4s_57cf92fd9z52z14gm8g7m0000gn/T/TemporaryItems/NSIRD_screencaptureui_QHfZlZ/%E6%88%AA%E5%B1%8F2026-08-31%2015.43.19.png?version%3D1788162203291)
 当前实现会使用 `127.0.0.1:7700` 建立连接。虽然程序接受 `-ip` 参数，但发送方和接收方的运行代码目前仍使用上述固定地址；跨主机运行前需要调整对应实现。
 
 ## 参数说明
@@ -139,8 +140,9 @@ cmake .. -DENABLE_BATCHPIR=OFF -DlibOTe_DIR=/path/to/lib/cmake/libOTe
 ```shell
 ./psi -r 2 -ss 12 -rs 8 -cf full -us 100 -uop insert
 ```
-
-## VERI-Wild 真实车辆数据
+运行结果如下图所示：
+![alt text](https://file%2B.vscode-resource.vscode-cdn.net/var/folders/fh/4s_57cf92fd9z52z14gm8g7m0000gn/T/TemporaryItems/NSIRD_screencaptureui_uwJ6Bv/%E6%88%AA%E5%B1%8F2026-08-31%2015.44.32.png?version%3D1788162290971)
+<!-- ## VERI-Wild 真实车辆数据
 
 仓库提供 `tools/preprocess_veriwild.py`，用于从 VERI-Wild 标注文件中构造真实车辆 PSI 输入。默认实验参数为：
 
@@ -195,7 +197,7 @@ data/processed/veriwild_metadata.json
   -cf batchpir
 ```
 
-`-sf` 和 `-rf` 会覆盖 `-ss` 与 `-rs`，集合规模直接由文件大小计算。数据集原始标注解析、车辆 ID 哈希和文件生成均在协议运行前完成，不计入 PSI 耗时。未指定集合文件时，程序仍使用原有的固定种子数据模式。
+`-sf` 和 `-rf` 会覆盖 `-ss` 与 `-rs`，集合规模直接由文件大小计算。数据集原始标注解析、车辆 ID 哈希和文件生成均在协议运行前完成，不计入 PSI 耗时。未指定集合文件时，程序仍使用原有的固定种子数据模式。 -->
 <!-- 
 ## City-scale Traffic Camera 真实车辆数据
 
