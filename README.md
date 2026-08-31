@@ -116,6 +116,7 @@ cmake .. -DENABLE_BATCHPIR=OFF -DlibOTe_DIR=/path/to/lib/cmake/libOTe
 运行结果如下图所示：
 
 ![alt text](picture/batchPIR.png)
+
 当前实现会使用 `127.0.0.1:7700` 建立连接。虽然程序接受 `-ip` 参数，但发送方和接收方的运行代码目前仍使用上述固定地址；跨主机运行前需要调整对应实现。
 
 ## 参数说明
@@ -338,3 +339,6 @@ cmake .. -DlibOTe_DIR=/path/to/lib/cmake/libOTe
 ### `batchpir` 模式不可用
 
 确认 SEAL 和 BatchPIR 已正确安装且能被 CMake 找到；如果暂时不需要该功能，请使用 `-DENABLE_BATCHPIR=OFF` 构建。
+
+## 联系
+有任何问题请联系mypinkiek@163.com
