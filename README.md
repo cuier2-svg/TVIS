@@ -114,6 +114,7 @@ cmake .. -DENABLE_BATCHPIR=OFF -DlibOTe_DIR=/path/to/lib/cmake/libOTe
 ./psi -r 1 -ss 20 -rs 8 -cf batchpir
 ```
 运行结果如下图所示：
+
 ![alt text](picture/batchPIR.png)
 当前实现会使用 `127.0.0.1:7700` 建立连接。虽然程序接受 `-ip` 参数，但发送方和接收方的运行代码目前仍使用上述固定地址；跨主机运行前需要调整对应实现。
 
@@ -141,6 +142,7 @@ cmake .. -DENABLE_BATCHPIR=OFF -DlibOTe_DIR=/path/to/lib/cmake/libOTe
 ./psi -r 2 -ss 12 -rs 8 -cf full -us 100 -uop insert
 ```
 运行结果如下图所示：
+
 ![alt text](picture/Uop.png)
 <!-- ## VERI-Wild 真实车辆数据
 
