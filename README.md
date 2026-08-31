@@ -114,7 +114,7 @@ cmake .. -DENABLE_BATCHPIR=OFF -DlibOTe_DIR=/path/to/lib/cmake/libOTe
 ./psi -r 1 -ss 20 -rs 8 -cf batchpir
 ```
 运行结果如下图所示：
-![alt text](https://file%2B.vscode-resource.vscode-cdn.net/var/folders/fh/4s_57cf92fd9z52z14gm8g7m0000gn/T/TemporaryItems/NSIRD_screencaptureui_QHfZlZ/%E6%88%AA%E5%B1%8F2026-08-31%2015.43.19.png?version%3D1788162203291)
+![alt text](https://file%2B.vscode-resource.vscode-cdn.net/Users/cuiyang/upsi-main-2/picture/batchPIR.png?version%3D1788164317185)
 当前实现会使用 `127.0.0.1:7700` 建立连接。虽然程序接受 `-ip` 参数，但发送方和接收方的运行代码目前仍使用上述固定地址；跨主机运行前需要调整对应实现。
 
 ## 参数说明
@@ -141,7 +141,7 @@ cmake .. -DENABLE_BATCHPIR=OFF -DlibOTe_DIR=/path/to/lib/cmake/libOTe
 ./psi -r 2 -ss 12 -rs 8 -cf full -us 100 -uop insert
 ```
 运行结果如下图所示：
-![alt text](https://file%2B.vscode-resource.vscode-cdn.net/var/folders/fh/4s_57cf92fd9z52z14gm8g7m0000gn/T/TemporaryItems/NSIRD_screencaptureui_uwJ6Bv/%E6%88%AA%E5%B1%8F2026-08-31%2015.44.32.png?version%3D1788162290971)
+![alt text](https://file%2B.vscode-resource.vscode-cdn.net/Users/cuiyang/upsi-main-2/picture/Uop.png?version%3D1788164294426)
 <!-- ## VERI-Wild 真实车辆数据
 
 仓库提供 `tools/preprocess_veriwild.py`，用于从 VERI-Wild 标注文件中构造真实车辆 PSI 输入。默认实验参数为：
